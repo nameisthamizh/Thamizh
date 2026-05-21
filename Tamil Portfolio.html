@@ -6,17 +6,17 @@
 <title>Rajesh S. | Video Editor & Cinematographer</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
-    /* --- ROYAL & ELEGANT THEME (Midnight & Gold) --- */
+    /* --- SLEEK MINIMALIST DARK THEME (Carbon & Chrome) --- */
     :root {
-        --bg-color: #0B0A10; /* Deep elegant dark midnight base */
-        --text-main: #FDFBF7; /* Soft creamy off-white for elegant contrast */
-        --text-muted: #D1C7B7; /* Warm taupe/beige instead of harsh grey */
-        --accent: #D4AF37; /* Royal Metallic Gold */
+        --bg-color: #030303; /* True black/carbon base */
+        --text-main: #FFFFFF; /* Pure white for high contrast */
+        --text-muted: #888888; /* Clean, neutral graphite grey */
+        --accent: #FFFFFF; /* Minimalist bright accent */
         
-        /* Extra Transparency + Extreme Blur for smoky, premium Frosted Glass */
-        --glass-bg: rgba(15, 12, 18, 0.12); 
-        --glass-border: rgba(212, 175, 55, 0.15); /* Subtle gold tinted border */
-        --glass-glow: rgba(212, 175, 55, 0.08); /* Soft gold inner glow */
+        /* Ultra-dark glass with high blur */
+        --glass-bg: rgba(15, 15, 15, 0.4); 
+        --glass-border: rgba(255, 255, 255, 0.08); 
+        --glass-glow: rgba(255, 255, 255, 0.03); 
         
         --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         --font-mono: 'JetBrains Mono', monospace; 
@@ -45,8 +45,9 @@
         object-fit: cover; 
         object-position: center; 
         z-index: -3; 
-        opacity: 0.5; /* Slightly lowered for elegance */
+        opacity: 0.3; /* Very dim for standard dark mode */
         pointer-events: none;
+        filter: saturate(1.2) contrast(1.1); /* A little saturated, color retained */
     }
 
     /* --- MOBILE BACKGROUND IMAGE --- */
@@ -58,12 +59,13 @@
         object-fit: cover;
         object-position: center;
         z-index: -3;
-        opacity: 0.35; 
+        opacity: 0.25; 
         pointer-events: none;
         will-change: transform; 
+        filter: saturate(1.2) contrast(1.1); /* A little saturated, color retained */
     }
 
-    /* Dark Vignette tailored to midnight theme */
+    /* Dark Vignette tailored to pure dark theme */
     .bg-overlay {
         position: fixed;
         top: 0; 
@@ -71,7 +73,7 @@
         width: 100%; 
         height: 100%;
         height: 100dvh;
-        background: radial-gradient(circle at center, rgba(11,10,16,0.3) 10%, #050408 110%);
+        background: radial-gradient(circle at center, rgba(0,0,0,0.4) 10%, #000000 110%);
         z-index: -2;
         pointer-events: none;
     }
@@ -79,23 +81,23 @@
     /* --- HEAVY GLASS PANELS --- */
     .glass-panel {
         background: var(--glass-bg);
-        backdrop-filter: blur(50px); /* Increased blur */
+        backdrop-filter: blur(50px);
         -webkit-backdrop-filter: blur(50px);
         border: 1px solid var(--glass-border);
         border-radius: 24px;
-        box-shadow: 0 30px 60px rgba(0,0,0,0.85), inset 0 1px 0 var(--glass-glow);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.95), inset 0 1px 0 var(--glass-glow);
         position: relative;
         overflow: hidden;
     }
 
     /* --- HIGHLY TRANSPARENT PANEL (For Contact Reveal) --- */
     .contact-panel {
-        background: rgba(10, 8, 12, 0.08); /* Extra transparent */
+        background: rgba(5, 5, 5, 0.2); 
         backdrop-filter: blur(40px); 
         -webkit-backdrop-filter: blur(40px);
-        border: 1px solid rgba(212, 175, 55, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 24px;
-        box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.95);
         position: relative;
         overflow: hidden;
     }
@@ -106,10 +108,11 @@
         height: 220px; 
         object-fit: cover;
         margin: 0 auto 30px auto; 
-        border: 8px solid #E8E2D9; /* Soft cream border instead of harsh white */
+        border: 4px solid #333333; /* Dark grey border */
         border-radius: 4px; 
-        box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.9);
         display: block;
+        filter: grayscale(30%);
     }
 
     /* --- EXACT APP ICONS --- */
@@ -119,15 +122,15 @@
         display: flex; align-items: center; justify-content: center;
         font-family: var(--font-main); font-weight: 800; font-size: 18px;
         letter-spacing: -0.5px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.8);
         flex-shrink: 0;
     }
-    .icon-pr { background: #00005b; color: #ea77ff; border: 2px solid #ea77ff; }
-    .icon-ps { background: #001e36; color: #31a8ff; border: 2px solid #31a8ff; }
-    .icon-lr { background: #001e36; color: #7bc8fb; border: 2px solid #7bc8fb; }
-    .icon-ae { background: #00005b; color: #9999ff; border: 2px solid #9999ff; }
-    .icon-ai { background: #330000; color: #ff9a00; border: 2px solid #ff9a00; }
-    .icon-dv { background: linear-gradient(135deg, #1a1a1a, #000); color: #fff; border: 2px solid var(--accent); font-family: var(--font-mono); }
+    .icon-pr { background: #000022; color: #ea77ff; border: 1px solid #ea77ff; }
+    .icon-ps { background: #000a14; color: #31a8ff; border: 1px solid #31a8ff; }
+    .icon-lr { background: #000a14; color: #7bc8fb; border: 1px solid #7bc8fb; }
+    .icon-ae { background: #000022; color: #9999ff; border: 1px solid #9999ff; }
+    .icon-ai { background: #1a0000; color: #ff9a00; border: 1px solid #ff9a00; }
+    .icon-dv { background: linear-gradient(135deg, #111, #000); color: #fff; border: 1px solid #555; font-family: var(--font-mono); }
 
     .app-label-wrapper { display: flex; align-items: center; gap: 14px; }
     .app-label-text { display: flex; flex-direction: column; line-height: 1.2; }
@@ -139,18 +142,18 @@
     
     .soft-logo {
         position: absolute; width: 80px; height: 80px;
-        background: rgba(15, 12, 18, 0.2); backdrop-filter: blur(18px); /* More blur here too */
+        background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(20px); 
         border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center;
         font-family: var(--font-main); font-weight: 800; font-size: 1.8rem;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8); transform-style: preserve-3d; will-change: transform;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9); transform-style: preserve-3d; will-change: transform;
     }
     .soft-logo span { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
     
-    .logo-pr { top: 15%; left: 8%; color: #ea77ff; border: 1px solid rgba(234, 119, 255, 0.3); }
-    .logo-ps { top: 25%; right: 7%; color: #31a8ff; border: 1px solid rgba(49, 168, 255, 0.3); }
-    .logo-ae { top: 60%; left: 5%; color: #9999ff; border: 1px solid rgba(153, 153, 255, 0.3); }
-    .logo-dv { top: 70%; right: 10%; color: var(--accent); border: 1px solid rgba(212, 175, 55, 0.3); }
-    .logo-ai { top: 45%; left: 82%; color: #ff9a00; border: 1px solid rgba(255, 154, 0, 0.3); }
+    .logo-pr { top: 15%; left: 8%; color: rgba(234, 119, 255, 0.6); border: 1px solid rgba(234, 119, 255, 0.15); }
+    .logo-ps { top: 25%; right: 7%; color: rgba(49, 168, 255, 0.6); border: 1px solid rgba(49, 168, 255, 0.15); }
+    .logo-ae { top: 60%; left: 5%; color: rgba(153, 153, 255, 0.6); border: 1px solid rgba(153, 153, 255, 0.15); }
+    .logo-dv { top: 70%; right: 10%; color: #888; border: 1px solid rgba(255, 255, 255, 0.15); }
+    .logo-ai { top: 45%; left: 82%; color: rgba(255, 154, 0, 0.6); border: 1px solid rgba(255, 154, 0, 0.15); }
 
     /* --- NAVIGATION --- */
     nav {
@@ -164,7 +167,7 @@
     }
     .nav-links { display: flex; gap: 2.5rem; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
     .nav-links a { color: var(--text-muted); text-decoration: none; transition: 0.3s; white-space: nowrap; }
-    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
 
     /* --- LAYOUT & TYPOGRAPHY --- */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; position: relative; z-index: 10; }
@@ -176,10 +179,10 @@
 
     /* --- BUTTONS --- */
     .btn { padding: 14px 32px; border-radius: 40px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: 0.3s; display: inline-block; letter-spacing: 0.5px; }
-    .btn-primary { background: var(--accent); color: #111; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4); background: #F3D266; }
-    .btn-glass { background: rgba(253, 251, 247, 0.08); color: var(--text-main); border: 1px solid rgba(212, 175, 55, 0.2); }
-    .btn-glass:hover { background: rgba(212, 175, 55, 0.15); border-color: var(--accent); transform: translateY(-3px); color: var(--accent); }
+    .btn-primary { background: var(--text-main); color: #000; box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1); }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2); background: #e0e0e0; }
+    .btn-glass { background: rgba(255, 255, 255, 0.05); color: var(--text-main); border: 1px solid rgba(255, 255, 255, 0.15); }
+    .btn-glass:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; transform: translateY(-3px); }
 
     /* --- HERO SECTION --- */
     .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
@@ -187,16 +190,15 @@
     .hero-content { padding: 60px 40px; }
     .hero-alias-badge {
         display: inline-flex; align-items: center; gap: 8px;
-        background: rgba(212, 175, 55, 0.12); border: 1px solid rgba(212, 175, 55, 0.3);
+        background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15);
         padding: 6px 16px; border-radius: 30px;
-        font-size: 0.8rem; font-weight: 700; color: var(--accent); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;
+        font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;
     }
     .hero-alias-badge span { color: var(--text-muted); font-weight: 500; }
     .hero-actions { display: flex; gap: 15px; margin-top: 2.5rem; flex-wrap: wrap; }
 
     .hero-visual { aspect-ratio: 4/5; padding: 12px; }
-    /* Darker, moodier portrait style to match elegance */
-    .hero-visual img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; filter: contrast(1.1) sepia(0.1); } 
+    .hero-visual img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; filter: contrast(1.1) grayscale(20%); } 
 
     /* --- WORK PORTFOLIO --- */
     .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; perspective: 1000px; }
@@ -206,19 +208,19 @@
         display: flex; flex-direction: column;
         transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s, border-color 0.3s; transform-style: preserve-3d;
     }
-    .project-card:hover { border-color: var(--accent); background: rgba(212, 175, 55, 0.08); transform: translateY(-10px); }
+    .project-card:hover { border-color: #555; background: rgba(255, 255, 255, 0.03); transform: translateY(-10px); }
     .project-card h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 15px; transform: translateZ(30px); }
     .project-card p { color: var(--text-muted); font-size: 0.95rem; flex: 1; margin-bottom: 25px; transform: translateZ(20px); }
-    .link-arrow { font-size: 0.9rem; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 8px; transition: 0.3s; transform: translateZ(40px); }
+    .link-arrow { font-size: 0.9rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px; transition: 0.3s; transform: translateZ(40px); }
     .project-card:hover .link-arrow { gap: 15px; }
 
     /* --- SEPARATED ABOUT & SKILLS SECTIONS --- */
     .wide-card { padding: 60px; max-width: 900px; margin: 0 auto; width: 100%; }
     
     .history-item { margin-bottom: 35px; border-left: 2px solid var(--glass-border); padding-left: 30px; position: relative; }
-    .history-item::before { content: ''; position: absolute; left: -7px; top: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+    .history-item::before { content: ''; position: absolute; left: -7px; top: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--text-main); box-shadow: 0 0 10px rgba(255,255,255,0.3); }
     .history-item:last-child { margin-bottom: 0; }
-    .h-year { color: var(--accent); font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; display: block; }
+    .h-year { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; display: block; }
     .h-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main); letter-spacing: -0.5px; }
     .h-desc { font-size: 1rem; color: var(--text-muted); line-height: 1.7; }
 
@@ -226,39 +228,39 @@
     .skill-bar { margin-bottom: 35px; }
     .skill-bar:last-child { margin-bottom: 0; }
     .skill-info-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-    .skill-percent { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--accent); }
+    .skill-percent { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--text-main); }
     
-    .skill-track { width: 100%; height: 6px; background: rgba(253, 251, 247, 0.1); overflow: hidden; border-radius: 10px; }
-    .skill-fill { height: 100%; background: var(--accent); width: 0%; border-radius: 10px; box-shadow: 0 0 12px rgba(212, 175, 55, 0.6); }
+    .skill-track { width: 100%; height: 6px; background: rgba(255, 255, 255, 0.05); overflow: hidden; border-radius: 10px; }
+    .skill-fill { height: 100%; background: var(--text-main); width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
 
     /* --- TIMELINE (Bottom Desktop Only) --- */
     .timeline-viewport {
         position: fixed; bottom: 0; left: 0; width: 100vw; height: 130px;
-        background: linear-gradient(0deg, rgba(5,4,8,0.95) 40%, transparent 100%);
+        background: linear-gradient(0deg, #000000 40%, transparent 100%);
         border-top: 1px solid var(--glass-border); z-index: 85; pointer-events: none;
         padding-top: 25px; overflow: hidden;
     }
     .timeline-container-block { position: absolute; left: 0; width: 350vw; height: 80px; display: flex; flex-direction: column; gap: 8px; will-change: transform; }
     .timeline-row { height: 14px; display: flex; align-items: center; padding-left: 50vw; position: relative; }
-    .timeline-row::before { content: attr(data-track); position: fixed; left: 20px; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); font-weight: 700; }
+    .timeline-row::before { content: attr(data-track); position: fixed; left: 20px; font-family: var(--font-mono); font-size: 0.65rem; color: #666; font-weight: 700; }
     
-    .clip-block { height: 100%; border-radius: 4px; border: 1px solid rgba(253,251,247,0.1); position: relative; overflow: hidden; }
+    .clip-block { height: 100%; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden; }
     
-    /* Elegant Jewel Tones for Timeline Blocks */
-    .clip-video { background: rgba(212, 175, 55, 0.3); border-color: var(--accent); width: 420px; margin-right: 25px; } /* Gold */
-    .clip-audio { background: rgba(80, 200, 120, 0.3); border-color: #50C878; width: 510px; margin-right: 15px; } /* Emerald */
-    .clip-fx { background: rgba(224, 17, 95, 0.3); border-color: #E0115F; width: 190px; margin-right: 60px; } /* Ruby */
+    /* Monochrome / Desaturated Timeline Blocks */
+    .clip-video { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.3); width: 420px; margin-right: 25px; } 
+    .clip-audio { background: rgba(120, 120, 120, 0.15); border-color: rgba(120, 120, 120, 0.3); width: 510px; margin-right: 15px; } 
+    .clip-fx { background: rgba(80, 80, 80, 0.2); border-color: rgba(80, 80, 80, 0.4); width: 190px; margin-right: 60px; } 
 
     /* --- LIVE TIMECODE & PLAYBACK ICON --- */
     .timecode { position: fixed; bottom: 30px; right: 40px; font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-muted); z-index: 95; display: flex; align-items: center; gap: 12px; pointer-events: none; }
     .timecode .rec { 
-        color: var(--accent); 
+        color: var(--text-main); 
         display: flex; align-items: center; gap: 8px; 
         font-weight: 700; font-family: var(--font-main); font-size: 0.8rem; letter-spacing: 1px; 
     }
     .timecode .rec svg {
         animation: pulseIcon 2s infinite;
-        filter: drop-shadow(0 0 6px var(--accent));
+        filter: drop-shadow(0 0 4px rgba(255,255,255,0.5));
     }
     @keyframes pulseIcon { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
@@ -537,7 +539,7 @@
                 
                 <div class="hero-actions" style="justify-content: flex-start; margin-top: 0;">
                     <a href="mailto:tamiln7258@gmail.com" class="btn btn-primary">Send an Email</a>
-                    <a href="tel:9686206933" class="btn btn-glass" style="background: rgba(10,8,12,0.4);">Call Me</a>
+                    <a href="tel:9686206933" class="btn btn-glass" style="background: rgba(0,0,0,0.4);">Call Me</a>
                 </div>
             </div>
 
@@ -564,9 +566,9 @@
         width: 100%; 
         height: 600px; 
         object-fit: cover; 
-        border: 8px solid #E8E2D9; 
+        border: 4px solid #333; 
         border-radius: 4px; 
-        box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.9);
     }
 
     @media (max-width: 900px) {
