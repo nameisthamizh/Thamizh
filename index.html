@@ -1,768 +1,2413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rajesh S. | Video Editor & Cinematographer</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
-<style>
-    /* --- SLEEK MINIMALIST DARK THEME (Carbon & Chrome) --- */
-    :root {
-        --bg-color: #030303; /* True black/carbon base */
-        --text-main: #FFFFFF; /* Pure white for high contrast */
-        --text-muted: #888888; /* Clean, neutral graphite grey */
-        --accent: #FFFFFF; /* Minimalist bright accent */
-        
-        /* Ultra-dark glass with high blur */
-        --glass-bg: rgba(15, 15, 15, 0.4); 
-        --glass-border: rgba(255, 255, 255, 0.08); 
-        --glass-glow: rgba(255, 255, 255, 0.03); 
-        
-        --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        --font-mono: 'JetBrains Mono', monospace; 
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajesh S. (THAMIZH) — Video Editor, Cinematographer & Designer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #050505;
+            --bg-surface: rgba(14, 14, 16, 0.72);
+            --bg-elevated: rgba(22, 22, 26, 0.85);
+            --border-hairline: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.22);
+            --text-main: #FAFAFA;
+            --text-muted: #8E8E93;
+            --accent-pr: #D977FF;
+            --accent-dv: #22D3EE;
+            --accent-ps: #38BDF8;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: auto; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-        background-color: var(--bg-color);
-        color: var(--text-main);
-        font-family: var(--font-main);
-        line-height: 1.6;
-        overflow-x: hidden;
-        -webkit-font-smoothing: antialiased;
-    }
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+        }
 
-    /* --- BACKGROUND VIDEO --- */
-    .bg-video {
-        position: fixed;
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%;
-        height: 100dvh; 
-        object-fit: cover; 
-        object-position: center; 
-        z-index: -3; 
-        opacity: 0.3; /* Very dim for standard dark mode */
-        pointer-events: none;
-        filter: saturate(1.2) contrast(1.1); /* A little saturated, color retained */
-    }
+        body {
+            background-color: var(--bg-base);
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 56px;
+        }
 
-    /* --- MOBILE BACKGROUND IMAGE --- */
-    .bg-mobile-img {
-        display: none; 
-        position: fixed;
-        top: 0; left: 0; 
-        width: 100%; height: 100dvh;
-        object-fit: cover;
-        object-position: center;
-        z-index: -3;
-        opacity: 0.25; 
-        pointer-events: none;
-        will-change: transform; 
-        filter: saturate(1.2) contrast(1.1); /* A little saturated, color retained */
-    }
+        /* Subtle Ambient Radial Mesh (Minimal, Non-Distracting) */
+        .ambient-mesh {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(800px circle at var(--cursor-x, 50vw) var(--cursor-y, 30vh), rgba(255, 255, 255, 0.028), transparent 60%),
+                radial-gradient(600px circle at 85% 12%, rgba(56, 189, 248, 0.025), transparent 55%),
+                radial-gradient(600px circle at 15% 80%, rgba(217, 119, 255, 0.02), transparent 55%);
+        }
 
-    /* Dark Vignette tailored to pure dark theme */
-    .bg-overlay {
-        position: fixed;
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%;
-        height: 100dvh;
-        background: radial-gradient(circle at center, rgba(0,0,0,0.4) 10%, #000000 110%);
-        z-index: -2;
-        pointer-events: none;
-    }
+        /* Minimalist Carbon Card with Mouse Spotlight Border */
+        .carbon-card {
+            background: var(--bg-surface);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border-hairline);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+        }
 
-    /* --- HEAVY GLASS PANELS --- */
-    .glass-panel {
-        background: var(--glass-bg);
-        backdrop-filter: blur(50px);
-        -webkit-backdrop-filter: blur(50px);
-        border: 1px solid var(--glass-border);
-        border-radius: 24px;
-        box-shadow: 0 30px 60px rgba(0,0,0,0.95), inset 0 1px 0 var(--glass-glow);
-        position: relative;
-        overflow: hidden;
-    }
+        .carbon-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                460px circle at var(--card-mouse-x, -500px) var(--card-mouse-y, -500px),
+                rgba(255, 255, 255, 0.065),
+                transparent 50%
+            );
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-    /* --- HIGHLY TRANSPARENT PANEL (For Contact Reveal) --- */
-    .contact-panel {
-        background: rgba(5, 5, 5, 0.2); 
-        backdrop-filter: blur(40px); 
-        -webkit-backdrop-filter: blur(40px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 24px;
-        box-shadow: 0 30px 60px rgba(0,0,0,0.95);
-        position: relative;
-        overflow: hidden;
-    }
+        .carbon-card:hover::before {
+            opacity: 1;
+        }
 
-    /* --- CONTACT PHOTO FRAME --- */
-    .contact-photo {
-        width: 180px; 
-        height: 220px; 
-        object-fit: cover;
-        margin: 0 auto 30px auto; 
-        border: 4px solid #333333; /* Dark grey border */
-        border-radius: 4px; 
-        box-shadow: 0 20px 40px rgba(0,0,0,0.9);
-        display: block;
-        filter: grayscale(30%);
-    }
+        .carbon-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.85);
+        }
 
-    /* --- EXACT APP ICONS --- */
-    .app-icon {
-        width: 38px; height: 38px;
-        border-radius: 8px;
-        display: flex; align-items: center; justify-content: center;
-        font-family: var(--font-main); font-weight: 800; font-size: 18px;
-        letter-spacing: -0.5px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.8);
-        flex-shrink: 0;
-    }
-    .icon-pr { background: #000022; color: #ea77ff; border: 1px solid #ea77ff; }
-    .icon-ps { background: #000a14; color: #31a8ff; border: 1px solid #31a8ff; }
-    .icon-lr { background: #000a14; color: #7bc8fb; border: 1px solid #7bc8fb; }
-    .icon-ae { background: #000022; color: #9999ff; border: 1px solid #9999ff; }
-    .icon-ai { background: #1a0000; color: #ff9a00; border: 1px solid #ff9a00; }
-    .icon-dv { background: linear-gradient(135deg, #111, #000); color: #fff; border: 1px solid #555; font-family: var(--font-mono); }
+        /* Floating Pill Navigation */
+        .top-nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(10, 10, 12, 0.78);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 8px 18px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+            max-width: 95vw;
+            overflow-x: auto;
+        }
 
-    .app-label-wrapper { display: flex; align-items: center; gap: 14px; }
-    .app-label-text { display: flex; flex-direction: column; line-height: 1.2; }
-    .app-label-text span:first-child { font-weight: 600; font-size: 0.95rem; color: var(--text-main); }
-    .app-label-text span:last-child { font-weight: 400; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .top-nav a {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 999px;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            letter-spacing: 0.02em;
+        }
 
-    /* --- FLOATING APP LOGOS --- */
-    .workspace-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; perspective: 1200px; }
-    
-    .soft-logo {
-        position: absolute; width: 80px; height: 80px;
-        background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(20px); 
-        border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        font-family: var(--font-main); font-weight: 800; font-size: 1.8rem;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9); transform-style: preserve-3d; will-change: transform;
-    }
-    .soft-logo span { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
-    
-    .logo-pr { top: 15%; left: 8%; color: rgba(234, 119, 255, 0.6); border: 1px solid rgba(234, 119, 255, 0.15); }
-    .logo-ps { top: 25%; right: 7%; color: rgba(49, 168, 255, 0.6); border: 1px solid rgba(49, 168, 255, 0.15); }
-    .logo-ae { top: 60%; left: 5%; color: rgba(153, 153, 255, 0.6); border: 1px solid rgba(153, 153, 255, 0.15); }
-    .logo-dv { top: 70%; right: 10%; color: #888; border: 1px solid rgba(255, 255, 255, 0.15); }
-    .logo-ai { top: 45%; left: 82%; color: rgba(255, 154, 0, 0.6); border: 1px solid rgba(255, 154, 0, 0.15); }
+        .top-nav a:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
 
-    /* --- NAVIGATION --- */
-    nav {
-        position: fixed;
-        top: 2rem; left: 50%; transform: translateX(-50%);
-        display: flex; align-items: center; gap: 2rem;
-        padding: 0.8rem 2.5rem; border-radius: 40px;
-        z-index: 100;
-        width: auto;
-        max-width: 95vw; 
-    }
-    .nav-links { display: flex; gap: 2.5rem; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; transition: 0.3s; white-space: nowrap; }
-    .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+        .top-nav a.active {
+            color: #000;
+            background: #FAFAFA;
+            font-weight: 600;
+        }
 
-    /* --- LAYOUT & TYPOGRAPHY --- */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; position: relative; z-index: 10; }
-    section { min-height: 100vh; padding: 120px 0; display: flex; flex-direction: column; justify-content: center; }
+        /* Section Layout & Reveal */
+        section {
+            position: relative;
+            z-index: 10;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 110px 24px;
+        }
 
-    .title-large { font-size: clamp(2.5rem, 7vw, 6rem); font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 0.5rem; color: var(--text-main); }
-    .subtitle { color: var(--text-muted); font-size: 1.15rem; font-weight: 400; line-height: 1.6; }
-    .section-title { font-size: clamp(2rem, 5vw, 2.5rem); font-weight: 700; letter-spacing: -1px; margin-bottom: 3rem; text-align: center; color: var(--text-main); }
+        .reveal-slide {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+        }
 
-    /* --- BUTTONS --- */
-    .btn { padding: 14px 32px; border-radius: 40px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: 0.3s; display: inline-block; letter-spacing: 0.5px; }
-    .btn-primary { background: var(--text-main); color: #000; box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1); }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2); background: #e0e0e0; }
-    .btn-glass { background: rgba(255, 255, 255, 0.05); color: var(--text-main); border: 1px solid rgba(255, 255, 255, 0.15); }
-    .btn-glass:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; transform: translateY(-3px); }
+        .reveal-slide.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    /* --- HERO SECTION --- */
-    .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
-    
-    .hero-content { padding: 60px 40px; }
-    .hero-alias-badge {
-        display: inline-flex; align-items: center; gap: 8px;
-        background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15);
-        padding: 6px 16px; border-radius: 30px;
-        font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;
-    }
-    .hero-alias-badge span { color: var(--text-muted); font-weight: 500; }
-    .hero-actions { display: flex; gap: 15px; margin-top: 2.5rem; flex-wrap: wrap; }
+        /* Section Eyebrow */
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
 
-    .hero-visual { aspect-ratio: 4/5; padding: 12px; }
-    .hero-visual img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; filter: contrast(1.1) grayscale(20%); } 
+        .eyebrow::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #FAFAFA;
+            display: inline-block;
+        }
 
-    /* --- WORK PORTFOLIO --- */
-    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; perspective: 1000px; }
-    
-    .project-card {
-        padding: 40px 30px; text-decoration: none; color: var(--text-main);
-        display: flex; flex-direction: column;
-        transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s, border-color 0.3s; transform-style: preserve-3d;
-    }
-    .project-card:hover { border-color: #555; background: rgba(255, 255, 255, 0.03); transform: translateY(-10px); }
-    .project-card h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 15px; transform: translateZ(30px); }
-    .project-card p { color: var(--text-muted); font-size: 0.95rem; flex: 1; margin-bottom: 25px; transform: translateZ(20px); }
-    .link-arrow { font-size: 0.9rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px; transition: 0.3s; transform: translateZ(40px); }
-    .project-card:hover .link-arrow { gap: 15px; }
+        /* Minimalist Buttons */
+        .btn-chrome {
+            background: #FAFAFA;
+            color: #050505;
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: 12px 26px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
 
-    /* --- SEPARATED ABOUT & SKILLS SECTIONS --- */
-    .wide-card { padding: 60px; max-width: 900px; margin: 0 auto; width: 100%; }
-    
-    .history-item { margin-bottom: 35px; border-left: 2px solid var(--glass-border); padding-left: 30px; position: relative; }
-    .history-item::before { content: ''; position: absolute; left: -7px; top: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--text-main); box-shadow: 0 0 10px rgba(255,255,255,0.3); }
-    .history-item:last-child { margin-bottom: 0; }
-    .h-year { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; display: block; }
-    .h-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main); letter-spacing: -0.5px; }
-    .h-desc { font-size: 1rem; color: var(--text-muted); line-height: 1.7; }
+        .btn-chrome:hover {
+            background: #E4E4E7;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.14);
+        }
 
-    /* Cinematic Skill Bars */
-    .skill-bar { margin-bottom: 35px; }
-    .skill-bar:last-child { margin-bottom: 0; }
-    .skill-info-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-    .skill-percent { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--text-main); }
-    
-    .skill-track { width: 100%; height: 6px; background: rgba(255, 255, 255, 0.05); overflow: hidden; border-radius: 10px; }
-    .skill-fill { height: 100%; background: var(--text-main); width: 0%; border-radius: 10px; box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.04);
+            color: #FAFAFA;
+            font-weight: 500;
+            font-size: 0.875rem;
+            padding: 12px 24px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
 
-    /* --- TIMELINE (Bottom Desktop Only) --- */
-    .timeline-viewport {
-        position: fixed; bottom: 0; left: 0; width: 100vw; height: 130px;
-        background: linear-gradient(0deg, #000000 40%, transparent 100%);
-        border-top: 1px solid var(--glass-border); z-index: 85; pointer-events: none;
-        padding-top: 25px; overflow: hidden;
-    }
-    .timeline-container-block { position: absolute; left: 0; width: 350vw; height: 80px; display: flex; flex-direction: column; gap: 8px; will-change: transform; }
-    .timeline-row { height: 14px; display: flex; align-items: center; padding-left: 50vw; position: relative; }
-    .timeline-row::before { content: attr(data-track); position: fixed; left: 20px; font-family: var(--font-mono); font-size: 0.65rem; color: #666; font-weight: 700; }
-    
-    .clip-block { height: 100%; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden; }
-    
-    /* Monochrome / Desaturated Timeline Blocks */
-    .clip-video { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.3); width: 420px; margin-right: 25px; } 
-    .clip-audio { background: rgba(120, 120, 120, 0.15); border-color: rgba(120, 120, 120, 0.3); width: 510px; margin-right: 15px; } 
-    .clip-fx { background: rgba(80, 80, 80, 0.2); border-color: rgba(80, 80, 80, 0.4); width: 190px; margin-right: 60px; } 
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
 
-    /* --- LIVE TIMECODE & PLAYBACK ICON --- */
-    .timecode { position: fixed; bottom: 30px; right: 40px; font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-muted); z-index: 95; display: flex; align-items: center; gap: 12px; pointer-events: none; }
-    .timecode .rec { 
-        color: var(--text-main); 
-        display: flex; align-items: center; gap: 8px; 
-        font-weight: 700; font-family: var(--font-main); font-size: 0.8rem; letter-spacing: 1px; 
-    }
-    .timecode .rec svg {
-        animation: pulseIcon 2s infinite;
-        filter: drop-shadow(0 0 4px rgba(255,255,255,0.5));
-    }
-    @keyframes pulseIcon { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        /* Single Hero Portrait Container */
+        .portrait-frame {
+            position: relative;
+            aspect-ratio: 4 / 5;
+            max-width: 400px;
+            margin-left: auto;
+            border-radius: 22px;
+            padding: 10px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.85);
+            overflow: hidden;
+        }
 
-    /* --- ANIMATIONS --- */
-    .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-    .reveal.active { opacity: 1; transform: translateY(0); }
-    .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; }
+        .portrait-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #0B0B0E;
+        }
 
-    /* =========================================
-       RESPONSIVE DESIGN (MOBILE & TABLET)
-       ========================================= */
-    @media (max-width: 900px) {
-        .bg-video { display: none !important; }
-        .bg-mobile-img { display: block; }
-        
-        .hero-grid { grid-template-columns: 1fr; gap: 30px; }
-        .hero-content { padding: 40px 20px; }
-        
-        .timeline-viewport, .timecode, .workspace-bg { display: none; }
-        
-        section { padding: 100px 0; min-height: 100vh; }
-        .wide-card, .contact-panel { padding: 40px 20px; }
-        
-        nav { padding: 0.8rem 1.5rem; width: 90%; top: 1rem; }
-        .nav-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
-    }
+        .portrait-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            filter: contrast(1.06) grayscale(12%);
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+        }
 
-    @media (max-width: 480px) {
-        .nav-links { gap: 0.8rem; font-size: 0.75rem; }
-        nav { padding: 0.6rem 1rem; width: 95%; }
-        
-        .hero-content { padding: 30px 15px; }
-        .btn { padding: 12px 24px; font-size: 0.85rem; width: 100%; text-align: center; }
-        
-        .app-label-text span:first-child { font-size: 0.85rem; }
-        .skill-percent { font-size: 0.85rem; }
-        
-        .contact-photo { width: 180px; height: 280px; }
-    }
-</style>
+        .portrait-frame:hover .portrait-inner img {
+            transform: scale(1.03);
+            filter: contrast(1.1) grayscale(0%);
+        }
+
+        /* Interactive Viewfinder Focus Reticle on Hero Portrait */
+        .focus-reticle {
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 8px;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 40%;
+            transition: left 0.12s ease-out, top 0.12s ease-out, border-color 0.2s ease;
+            z-index: 15;
+        }
+
+        .portrait-frame:hover .focus-reticle {
+            border-color: #22D3EE;
+        }
+
+        /* Project Card Interactive Canvas Stage */
+        .project-stage {
+            position: relative;
+            height: 196px;
+            background: #08080A;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        .project-stage canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Arcade Tabs */
+        .game-tab {
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .game-tab:hover {
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        .game-tab.active {
+            color: #050505;
+            background: #FAFAFA;
+            border-color: #FAFAFA;
+        }
+
+        .game-panel {
+            display: none;
+        }
+
+        .game-panel.active {
+            display: block;
+            animation: fadeSlide 0.3s ease forwards;
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Minimal Range Sliders */
+        input[type="range"].studio-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            outline: none;
+        }
+
+        input[type="range"].studio-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #FAFAFA;
+            border: 2px solid #050505;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+            transition: transform 0.15s ease;
+        }
+
+        input[type="range"].studio-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Experience Timeline Spine */
+        .timeline-item {
+            position: relative;
+            padding-left: 32px;
+            padding-bottom: 36px;
+            border-left: 1px solid rgba(255, 255, 255, 0.12);
+            transition: border-color 0.3s ease;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -6px;
+            top: 4px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #27272A;
+            border: 2px solid #71717A;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .timeline-item:hover .timeline-dot {
+            background: #FAFAFA;
+            border-color: #FAFAFA;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+            transform: scale(1.2);
+        }
+
+        /* Bottom Minimal Timecode Scrub Bar */
+        .bottom-scrub-dock {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 38px;
+            background: rgba(8, 8, 10, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 95;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 16px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            user-select: none;
+        }
+
+        .scrub-track {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .scrub-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #A1A1AA, #FAFAFA);
+            border-radius: 999px;
+        }
+
+        @media (max-width: 860px) {
+            section {
+                padding: 84px 18px;
+            }
+            .portrait-frame {
+                margin: 0 auto;
+                max-width: 340px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<video class="bg-video" id="bg-video" muted playsinline preload="auto" disableRemotePlayback decoding="sync">
-    <source src="Website Video.mp4" type="video/mp4">
-</video>
-<img src="Contact.png" class="bg-mobile-img" alt="Mobile Background">
-<div class="bg-overlay"></div>
+    <!-- Subtle Ambient Mouse Glow Mesh -->
+    <div class="ambient-mesh" id="ambient-mesh"></div>
 
-<div class="workspace-bg">
-    <div class="soft-logo logo-pr">Pr<span>Premiere</span></div>
-    <div class="soft-logo logo-ps">Ps<span>Photoshop</span></div>
-    <div class="soft-logo logo-ae">Ae<span>After FX</span></div>
-    <div class="soft-logo logo-dv">Dv<span>DaVinci</span></div>
-    <div class="soft-logo logo-ai">Ai<span>Illustrator</span></div>
-</div>
+    <!-- Hidden File Input in case owner wants to test a local portrait -->
+    <input type="file" id="local-photo-input" accept="image/*" class="hidden">
 
-<nav class="glass-panel">
-    <div class="nav-links">
-        <a href="#home">Home</a>
+    <!-- Minimalist Floating Navigation -->
+    <nav class="top-nav" aria-label="Primary Navigation">
+        <a href="#home" class="active">Home</a>
         <a href="#projects">Work</a>
+        <a href="#arcade">Studio Games</a>
         <a href="#experience">Journey</a>
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
-    </div>
-</nav>
+    </nav>
 
-<div class="timeline-viewport">
-    <div class="timeline-container-block" id="timeline-container-block">
-        <div class="timeline-row" data-track="V3 TITLES">
-            <div class="clip-block clip-fx" style="width:140px; margin-left:200px;"></div>
-            <div class="clip-block clip-fx" style="width:250px; margin-left:400px;"></div>
-            <div class="clip-block clip-fx" style="width:180px; margin-left:800px;"></div>
-        </div>
-        <div class="timeline-row" data-track="V2 VIDEO">
-            <div class="clip-block clip-video"></div>
-            <div class="clip-block clip-video" style="width:290px;"></div>
-            <div class="clip-block clip-video" style="width:600px;"></div>
-            <div class="clip-block clip-video" style="width:340px;"></div>
-        </div>
-        <div class="timeline-row" data-track="A1 AUDIO">
-            <div class="clip-block clip-audio"></div>
-            <div class="clip-block clip-audio" style="width:720px;"></div>
-            <div class="clip-block clip-audio" style="width:410px;"></div>
-        </div>
-    </div>
-</div>
-
-<div class="timecode">
-    <div class="rec">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-            <line x1="7" y1="2" x2="7" y2="22"></line>
-            <line x1="17" y1="2" x2="17" y2="22"></line>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <line x1="2" y1="7" x2="7" y2="7"></line>
-            <line x1="2" y1="17" x2="7" y2="17"></line>
-            <line x1="17" y1="17" x2="22" y2="17"></line>
-            <line x1="17" y1="7" x2="22" y2="7"></line>
-        </svg>
-        PLAYBACK
-    </div>
-    [ <span id="live-tc">00:00:00:00</span> ]
-</div>
-
-<div class="container">
-    
-    <section id="home"> 
-        <div class="hero-grid">
-            <div class="hero-content reveal glass-panel">
-                <div class="hero-alias-badge">
-                    <span>Industrial Name :</span> THAMIZH
+    <!-- =========================================================
+         SLIDE 1: HERO SECTION (WITH RAJESH'S SINGLE PORTRAIT)
+         ========================================================= -->
+    <section id="home" class="min-h-screen flex items-center pt-28">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full reveal-slide visible">
+            
+            <!-- Left Column: Typography & CTA -->
+            <div class="lg:col-span-7 space-y-6">
+                <div class="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 font-mono text-xs text-zinc-300">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>INDUSTRIAL NAME : <strong class="text-white tracking-wider">THAMIZH</strong></span>
+                    <span class="text-zinc-600">|</span>
+                    <span id="hero-live-fps" class="text-zinc-400">24.00 FPS</span>
                 </div>
-                
-                <h1 class="title-large">Rajesh </h1>
-                
-                <p class="subtitle">
-                    Video Editor & Cinematographer and also a Graphic Designer . Crafting high-end visual narratives, commercial spots, and cinematic event films with over 4 years of industry experience.
+
+                <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.04] text-white">
+                    Rajesh S.
+                </h1>
+
+                <p class="text-lg sm:text-xl text-zinc-400 font-normal max-w-2xl leading-relaxed">
+                    Video Editor, Cinematographer &amp; Graphic Designer crafting high-end visual narratives, commercial spots, and cinematic event films with over <span class="text-white font-medium">4+ years</span> of industry experience.
                 </p>
-                <div class="hero-actions">
-                    <a href="#projects" class="btn btn-primary">View Portfolio</a>
-                    <a href="#contact" class="btn btn-glass">Contact Me</a>
-                </div>
-            </div>
-            
-            <div class="hero-visual reveal delay-1 glass-panel tilt-element">
-                <img src="PS.jpg" alt="Rajesh S. Portrait">
-            </div>
-        </div>
-    </section>
 
-    <section id="projects"> 
-        <h2 class="section-title reveal">Selected Projects</h2>
-        
-        <div class="portfolio-grid">
-            <a href="https://drive.google.com/drive/folders/1DtKODcSVs2Ic_E6e2DEEx5qRVReo4agE?usp=sharing" target="_blank" class="project-card glass-panel tilt-element reveal">
-                <h3>Commercial Videos</h3>
-                <p>High-quality commercial videos and promotional content designed to help your brand stand out.</p>
-                <div class="link-arrow">View Project <span>→</span></div>
-            </a>
-            <a href="https://drive.google.com/drive/folders/1v8VfSI3rrWNFYcOORSQUDOdIgkpyRpjt?usp=drive_link" target="_blank" class="project-card glass-panel tilt-element reveal delay-1">
-                <h3>Social Media Reels</h3>
-                <p>Short, fast-paced, and engaging videos made specially for Instagram Reels and YouTube Shorts.</p>
-                <div class="link-arrow">View Project <span>→</span></div>
-            </a>
-            <a href="https://drive.google.com/drive/folders/1DI2BDEjwWnK7ypHPm3HIYkGcwKZ1twKu?usp=sharing" target="_blank" class="project-card glass-panel tilt-element reveal delay-2">
-                <h3>Event Coverage</h3>
-                <p>Professional camera work, live event editing, and color grading for corporate and college events.</p>
-                <div class="link-arrow">View Project <span>→</span></div>
-            </a>
-            <a href="https://drive.google.com/drive/folders/1G_563CDzBxtTgnODqA0Ad4pja6E10PID?usp=sharing" target="_blank" class="project-card glass-panel tilt-element reveal">
-                <h3>Graphic Design</h3>
-                <p>Digital designs, event posters, and marketing materials created using Photoshop and Illustrator.</p>
-                <div class="link-arrow">View Project <span>→</span></div>
-            </a>
-            <a href="https://drive.google.com/drive/folders/1YF82StuUZZrKdwKdThdhokUgHwWMCRE6?usp=sharing" target="_blank" class="project-card glass-panel tilt-element reveal delay-1">
-                <h3>Album Designs</h3>
-                <p>Beautiful and clean photo album designs that tell the story of your special day.</p>
-                <div class="link-arrow">View Project <span>→</span></div>
-            </a>
-            <a href="https://drive.google.com/drive/folders/1_-jnPjs93Lr9GngY0ALzdnvAq632ZHXs?usp=sharing" target="_blank" class="project-card glass-panel tilt-element reveal delay-2">
-                <h3>Photography</h3>
-                <p>Professional event and portrait photography focusing on great lighting and beautiful moments.</p>
-                <div class="link-arrow">View Project <span>→</span></div>
-            </a>
-        </div>
-    </section>
-
-    <section id="experience"> 
-        <h2 class="section-title reveal">The Journey</h2>
-        
-        <div class="wide-card glass-panel tilt-element reveal">
-            <div class="history-item">
-                <span class="h-year">2022 — 2026</span>
-                <h3 class="h-title">Video Editor & Cinematographer</h3>
-                <p class="h-desc">Kavi Pixels Studio & Freelance. Managed end-to-end video production for weddings and commercial films. Responsible for directing shoots, editing timelines, and final color grading.</p>
-            </div>
-            <div class="history-item">
-                <span class="h-year">2024 — 2026</span>
-                <h3 class="h-title">Media Team Editor</h3>
-                <p class="h-desc">Holy Cross College Media House. Created high-energy event highlight videos and managed live video editing packages for massive college events.</p>
-            </div>
-            <div class="history-item">
-                <span class="h-year">2021 — 2026</span>
-                <h3 class="h-title">M.Sc. & B.Sc. Degrees</h3>
-                <p class="h-desc"> Bachelor's in Visual Communication in Thanthai Periyar College (Autonomous) . Master's in Media and Communication in Holy Cross College (Autonomous). 
-                    Studied in the deep of storytelling and visual arts.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills"> 
-        <h2 class="section-title reveal">Software Skills</h2>
-        
-        <div class="wide-card glass-panel tilt-element reveal delay-1" id="skills-container">
-            
-            <div class="skill-bar" data-percent="95">
-                <div class="skill-info-container">
-                    <div class="app-label-wrapper">
-                        <div class="app-icon icon-pr">Pr</div>
-                        <div class="app-label-text"><span>Premiere Pro</span><span>Video Editing</span></div>
+                <!-- Interactive Quick-Metrics Strip -->
+                <div class="grid grid-cols-3 gap-3 max-w-lg pt-1">
+                    <div class="carbon-card p-3.5 text-left">
+                        <div class="font-mono text-xs text-zinc-500">EXPERIENCE</div>
+                        <div class="text-xl font-bold text-white mt-0.5">4+ Years</div>
                     </div>
-                    <div class="skill-percent">95%</div>
+                    <div class="carbon-card p-3.5 text-left">
+                        <div class="font-mono text-xs text-zinc-500">DISCIPLINES</div>
+                        <div class="text-xl font-bold text-white mt-0.5">Edit • Grade • Shoot</div>
+                    </div>
+                    <div class="carbon-card p-3.5 text-left">
+                        <div class="font-mono text-xs text-zinc-500">BASE</div>
+                        <div class="text-xl font-bold text-white mt-0.5">The Nilgiris</div>
+                    </div>
                 </div>
-                <div class="skill-track"><div class="skill-fill"></div></div>
+
+                <div class="flex flex-wrap items-center gap-3.5 pt-2">
+                    <a href="#projects" class="btn-chrome">
+                        <span>Explore Portfolio</span>
+                        <span>→</span>
+                    </a>
+                    <a href="#arcade" class="btn-outline">
+                        <span>🎮 Play the 3 Studio Games</span>
+                    </a>
+                    <a href="#contact" class="btn-outline">
+                        <span>Get in Touch</span>
+                    </a>
+                </div>
             </div>
 
-            <div class="skill-bar" data-percent="90">
-                <div class="skill-info-container">
-                    <div class="app-label-wrapper">
-                        <div class="app-icon icon-ps">Ps</div>
-                        <div class="app-label-text"><span>Photoshop</span><span>Graphic Design</span></div>
-                    </div>
-                    <div class="skill-percent">90%</div>
-                </div>
-                <div class="skill-track"><div class="skill-fill"></div></div>
-            </div>
+            <!-- Right Column: THE SINGLE SIGNATURE PORTRAIT OF RAJESH S. -->
+            <div class="lg:col-span-5">
+                <div class="portrait-frame carbon-card" id="hero-portrait-card">
+                    <div class="portrait-inner" id="portrait-stage">
+                        <!-- Interactive Camera Viewfinder HUD Overlay -->
+                        <div class="absolute top-3 left-3 right-3 z-20 flex items-center justify-between font-mono text-[10px] text-zinc-300 pointer-events-none">
+                            <span class="px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10">RAW • f/1.4 • ISO 400</span>
+                            <span id="portrait-xy-readout" class="px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10">AF [50, 40]</span>
+                        </div>
 
-            <div class="skill-bar" data-percent="90">
-                <div class="skill-info-container">
-                    <div class="app-label-wrapper">
-                        <div class="app-icon icon-lr">Lr</div>
-                        <div class="app-label-text"><span>Lightroom</span><span>Photo Grading</span></div>
-                    </div>
-                    <div class="skill-percent">90%</div>
-                </div>
-                <div class="skill-track"><div class="skill-fill"></div></div>
-            </div>
+                        <!-- Cursor-Tracking Autofocus Bracket -->
+                        <div class="focus-reticle" id="hero-focus-box">
+                            <div class="w-1.5 h-1.5 rounded-full bg-cyan-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+                        </div>
 
-            <div class="skill-bar" data-percent="50">
-                <div class="skill-info-container">
-                    <div class="app-label-wrapper">
-                        <div class="app-icon icon-dv">Dv</div>
-                        <div class="app-label-text"><span>DaVinci Resolve</span><span>Color Grading</span></div>
-                    </div>
-                    <div class="skill-percent">50%</div>
-                </div>
-                <div class="skill-track"><div class="skill-fill"></div></div>
-            </div>
+                        <!-- Single Owner Photo (Loads from thamizh.fun/PS.jpg -> PS.jpg -> Contact.png -> Clean Studio Canvas Fallback) -->
+                        <img src="https://thamizh.fun/PS.jpg"
+                             alt="Rajesh S. (THAMIZH) Portrait"
+                             id="owner-single-photo"
+                             onerror="if(!this.dataset.try1){this.dataset.try1='1';this.src='PS.jpg';}else if(!this.dataset.try2){this.dataset.try2='1';this.src='https://thamizh.fun/Contact.png';}else if(!this.dataset.try3){this.dataset.try3='1';this.src='Contact.png';}else{this.style.display='none';document.getElementById('portrait-fallback-canvas').classList.remove('hidden');}">
 
-            <div class="skill-bar" data-percent="35">
-                <div class="skill-info-container">
-                    <div class="app-label-wrapper">
-                        <div class="app-icon icon-ae">Ae</div>
-                        <div class="app-label-text"><span>After Effects</span><span>Motion Graphics</span></div>
-                    </div>
-                    <div class="skill-percent">35%</div>
-                </div>
-                <div class="skill-track"><div class="skill-fill"></div></div>
-            </div>
+                        <!-- Minimal Studio Silhouette Fallback if offline -->
+                        <canvas id="portrait-fallback-canvas" width="400" height="500" class="hidden w-full h-full object-cover"></canvas>
 
-            <div class="skill-bar" data-percent="35">
-                <div class="skill-info-container">
-                    <div class="app-label-wrapper">
-                        <div class="app-icon icon-ai">Ai</div>
-                        <div class="app-label-text"><span>Illustrator</span><span>Vector Design</span></div>
+                        <!-- Subtle Bottom Caption Bar with Optional Local Swap & Grade Filter -->
+                        <div class="absolute bottom-3 left-3 right-3 z-20 flex items-center justify-between bg-black/75 backdrop-blur-md border border-white/10 rounded-xl px-3 py-2 font-mono text-[10px]">
+                            <div>
+                                <div class="text-white font-semibold">RAJESH S. // THAMIZH</div>
+                                <div class="text-zinc-400">Director &amp; Editor</div>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <button type="button" id="cycle-portrait-grade" class="px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-zinc-200 transition" title="Cycle Color Grade on Portrait">LUT: Natural</button>
+                                <button type="button" onclick="document.getElementById('local-photo-input').click();" class="px-2 py-1 rounded bg-white/5 hover:bg-white/15 text-zinc-400 hover:text-white transition" title="Preview with a local photo file">📷</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="skill-percent">35%</div>
                 </div>
-                <div class="skill-track"><div class="skill-fill"></div></div>
             </div>
 
         </div>
     </section>
 
-  <section id="contact">
-    <div class="glass-panel contact-container-wrapper">
-        <div class="contact-grid">
-            
-            <div class="contact-photo-box">
-                <img src="Contact.png" alt="Rajesh S." class="contact-photo tilt-element">
+    <!-- =========================================================
+         SLIDE 2: SELECTED PROJECTS (TOPIC-SPECIFIC HOVER MOTION GRAPHICS)
+         ========================================================= -->
+    <section id="projects" class="reveal-slide">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div>
+                <div class="eyebrow">01 / Selected Works</div>
+                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">Interactive Project Bins</h2>
             </div>
+            <p class="text-sm text-zinc-400 max-w-md">
+                Move your cursor across any project monitor below to interact with its custom motion-graphic simulation, or click to open the full Google Drive master folder.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <div class="contact-text-box">
-                <h2 class="title-large" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px; color: var(--text-main);">Storytelling,<br>crafted frame by frame.</h2>
-                <p class="subtitle" style="margin-bottom: 30px;">Let's collaborate on your next cinematic project. I am based in The Nilgiris <br> available for assignments worldwide.</p>
-                
-                <div class="hero-actions" style="justify-content: flex-start; margin-top: 0;">
-                    <a href="mailto:tamiln7258@gmail.com" class="btn btn-primary">Send an Email</a>
-                    <a href="tel:9686206933" class="btn btn-glass" style="background: rgba(0,0,0,0.4);">Call Me</a>
+            <!-- 1. Commercial Videos (Anamorphic Lens Flare & Focus Rack) -->
+            <div class="carbon-card flex flex-col justify-between group" data-project-card="commercial">
+                <div>
+                    <div class="project-stage">
+                        <canvas class="topic-canvas" data-topic="commercial"></canvas>
+                        <div class="absolute top-3 left-3 right-3 flex justify-between font-mono text-[10px] text-zinc-400 pointer-events-none">
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10 text-zinc-200">2.39:1 ANAMORPHIC</span>
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10">HOVER: RACK FOCUS</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Commercial Videos</h3>
+                            <span class="font-mono text-[11px] text-zinc-500">01</span>
+                        </div>
+                        <p class="text-sm text-zinc-400 leading-relaxed">
+                            High-quality commercial videos and promotional brand films crafted with dynamic speed-ramps, lighting, and sound design.
+                        </p>
+                    </div>
+                </div>
+                <div class="px-6 pb-5 pt-2 flex items-center justify-between border-t border-white/[0.06]">
+                    <span class="font-mono text-[11px] text-zinc-500">ProRes 422 • 4K</span>
+                    <a href="https://drive.google.com/drive/folders/1DtKODcSVs2Ic_E6e2DEEx5qRVReo4agE?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-white hover:text-cyan-300 inline-flex items-center gap-1.5 transition">
+                        <span>Open Drive Folder</span>
+                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2. Social Media Reels (9:16 Phone Frame + Kinetic Typography & Beats) -->
+            <div class="carbon-card flex flex-col justify-between group" data-project-card="reels">
+                <div>
+                    <div class="project-stage">
+                        <canvas class="topic-canvas" data-topic="reels"></canvas>
+                        <div class="absolute top-3 left-3 right-3 flex justify-between font-mono text-[10px] text-zinc-400 pointer-events-none">
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10 text-zinc-200">9:16 VERTICAL</span>
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10">HOVER: SCRUB BEAT</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Social Media Reels</h3>
+                            <span class="font-mono text-[11px] text-zinc-500">02</span>
+                        </div>
+                        <p class="text-sm text-zinc-400 leading-relaxed">
+                            Short, fast-paced, retention-engineered vertical edits made specially for Instagram Reels and YouTube Shorts.
+                        </p>
+                    </div>
+                </div>
+                <div class="px-6 pb-5 pt-2 flex items-center justify-between border-t border-white/[0.06]">
+                    <span class="font-mono text-[11px] text-zinc-500">1080×1920 • 60FPS</span>
+                    <a href="https://drive.google.com/drive/folders/1v8VfSI3rrWNFYcOORSQUDOdIgkpyRpjt?usp=drive_link" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-white hover:text-cyan-300 inline-flex items-center gap-1.5 transition">
+                        <span>Open Drive Folder</span>
+                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Event Coverage (4-Camera Live Multicam Switcher on Quadrant Hover) -->
+            <div class="carbon-card flex flex-col justify-between group" data-project-card="events">
+                <div>
+                    <div class="project-stage">
+                        <canvas class="topic-canvas" data-topic="events"></canvas>
+                        <div class="absolute top-3 left-3 right-3 flex justify-between font-mono text-[10px] text-zinc-400 pointer-events-none">
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10 text-red-400">● 4-CAM MULTICAM</span>
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10">HOVER: SWITCH ANGLE</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Event Coverage</h3>
+                            <span class="font-mono text-[11px] text-zinc-500">03</span>
+                        </div>
+                        <p class="text-sm text-zinc-400 leading-relaxed">
+                            Professional multi-camera work, live event switching, and color grading for corporate, wedding, and college events.
+                        </p>
+                    </div>
+                </div>
+                <div class="px-6 pb-5 pt-2 flex items-center justify-between border-t border-white/[0.06]">
+                    <span class="font-mono text-[11px] text-zinc-500">Live Sync • Rec.709</span>
+                    <a href="https://drive.google.com/drive/folders/1DI2BDEjwWnK7ypHPm3HIYkGcwKZ1twKu?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-white hover:text-cyan-300 inline-flex items-center gap-1.5 transition">
+                        <span>Open Drive Folder</span>
+                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Graphic Design (Interactive Bezier Pen Tool & Vector Handles) -->
+            <div class="carbon-card flex flex-col justify-between group" data-project-card="design">
+                <div>
+                    <div class="project-stage">
+                        <canvas class="topic-canvas" data-topic="design"></canvas>
+                        <div class="absolute top-3 left-3 right-3 flex justify-between font-mono text-[10px] text-zinc-400 pointer-events-none">
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10 text-sky-400">Ps + Ai BEZIER PATH</span>
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10">HOVER: BEND VECTOR</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Graphic Design</h3>
+                            <span class="font-mono text-[11px] text-zinc-500">04</span>
+                        </div>
+                        <p class="text-sm text-zinc-400 leading-relaxed">
+                            Digital posters, brand identities, and marketing collateral crafted with precision in Photoshop and Illustrator.
+                        </p>
+                    </div>
+                </div>
+                <div class="px-6 pb-5 pt-2 flex items-center justify-between border-t border-white/[0.06]">
+                    <span class="font-mono text-[11px] text-zinc-500">PSD • Vector AI</span>
+                    <a href="https://drive.google.com/drive/folders/1G_563CDzBxtTgnODqA0Ad4pja6E10PID?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-white hover:text-cyan-300 inline-flex items-center gap-1.5 transition">
+                        <span>Open Drive Folder</span>
+                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. Album Designs (Interactive 3D Page-Flip Panoramic Spread) -->
+            <div class="carbon-card flex flex-col justify-between group" data-project-card="albums">
+                <div>
+                    <div class="project-stage">
+                        <canvas class="topic-canvas" data-topic="albums"></canvas>
+                        <div class="absolute top-3 left-3 right-3 flex justify-between font-mono text-[10px] text-zinc-400 pointer-events-none">
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10 text-amber-300">12×36 SPREAD</span>
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10">HOVER X: TURN PAGE</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Album Designs</h3>
+                            <span class="font-mono text-[11px] text-zinc-500">05</span>
+                        </div>
+                        <p class="text-sm text-zinc-400 leading-relaxed">
+                            Timeless, clean panoramic wedding and event photo album layouts that tell the complete story of your special day.
+                        </p>
+                    </div>
+                </div>
+                <div class="px-6 pb-5 pt-2 flex items-center justify-between border-t border-white/[0.06]">
+                    <span class="font-mono text-[11px] text-zinc-500">300 DPI • Print Master</span>
+                    <a href="https://drive.google.com/drive/folders/1YF82StuUZZrKdwKdThdhokUgHwWMCRE6?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-white hover:text-cyan-300 inline-flex items-center gap-1.5 transition">
+                        <span>Open Drive Folder</span>
+                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 6. Photography (Interactive DSLR Mechanical Iris Blades & Bokeh) -->
+            <div class="carbon-card flex flex-col justify-between group" data-project-card="photo">
+                <div>
+                    <div class="project-stage">
+                        <canvas class="topic-canvas" data-topic="photo"></canvas>
+                        <div class="absolute top-3 left-3 right-3 flex justify-between font-mono text-[10px] text-zinc-400 pointer-events-none">
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10 text-emerald-300">OPTICAL IRIS SIM</span>
+                            <span class="px-2 py-0.5 rounded bg-black/70 border border-white/10">HOVER: f/1.4 ↔ f/16</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Photography</h3>
+                            <span class="font-mono text-[11px] text-zinc-500">06</span>
+                        </div>
+                        <p class="text-sm text-zinc-400 leading-relaxed">
+                            Expressive portrait, event, and Nilgiris landscape photography focused on natural lighting, depth, and emotion.
+                        </p>
+                    </div>
+                </div>
+                <div class="px-6 pb-5 pt-2 flex items-center justify-between border-t border-white/[0.06]">
+                    <span class="font-mono text-[11px] text-zinc-500">14-Bit RAW • Lr</span>
+                    <a href="https://drive.google.com/drive/folders/1_-jnPjs93Lr9GngY0ALzdnvAq632ZHXs?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-white hover:text-cyan-300 inline-flex items-center gap-1.5 transition">
+                        <span>Open Drive Folder</span>
+                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
                 </div>
             </div>
 
         </div>
+    </section>
+
+    <!-- =========================================================
+         SLIDE 3: THE 3 STUDIO GAMES (VIDEO EDITING + COLOR GRADING + PHOTOSHOP)
+         ========================================================= -->
+    <section id="arcade" class="reveal-slide">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-6">
+            <div>
+                <div class="eyebrow">02 / Interactive Entertainment Suite</div>
+                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">The Director's Arcade</h2>
+                <p class="text-sm text-zinc-400 mt-2 max-w-xl">
+                    Test your post-production reflexes across all three disciplines: Timeline Editing in <strong>Premiere Pro</strong>, Look Matching in <strong>DaVinci Resolve</strong>, and Poster Compositing in <strong>Photoshop</strong>.
+                </p>
+            </div>
+
+            <!-- 3 Game Mode Switcher Tabs -->
+            <div class="flex flex-wrap gap-2">
+                <button type="button" class="game-tab active" data-game-tab="game-premiere">
+                    <span class="w-2 h-2 rounded-full bg-fuchsia-400"></span>
+                    <span>01. Premiere Cut Master</span>
+                </button>
+                <button type="button" class="game-tab" data-game-tab="game-davinci">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                    <span>02. DaVinci Color Match</span>
+                </button>
+                <button type="button" class="game-tab" data-game-tab="game-photoshop">
+                    <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                    <span>03. Photoshop Layer Studio</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- =====================================================
+             GAME 1: PREMIERE PRO — TIMELINE CUT MASTER
+             ===================================================== -->
+        <div id="game-premiere" class="game-panel active carbon-card p-6 sm:p-8">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-5 mb-5 border-b border-white/10">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded bg-fuchsia-500/20 border border-fuchsia-400/40 font-mono text-[11px] text-fuchsia-300 font-bold">Pr // NLE RHYTHM &amp; SANDBOX</span>
+                        <span id="pr-rank-badge" class="font-mono text-xs text-zinc-400">RANK: ASSISTANT EDITOR</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mt-1">Timeline Cut Master</h3>
+                    <p class="text-xs text-zinc-400 mt-0.5">
+                        Press <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white font-mono">SPACE</kbd> or <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white font-mono">C</kbd> when the red playhead crosses golden beat markers, or use Split, Copy, Paste, and Ripple Delete on the timeline clips.
+                    </p>
+                </div>
+
+                <!-- Scoreboard -->
+                <div class="flex items-center gap-6 font-mono">
+                    <div>
+                        <div class="text-[10px] text-zinc-500">SCORE</div>
+                        <div id="pr-score" class="text-2xl font-bold text-white">0000</div>
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-zinc-500">COMBO</div>
+                        <div id="pr-combo" class="text-2xl font-bold text-fuchsia-400">0x</div>
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-zinc-500">TIMER</div>
+                        <div id="pr-timer" class="text-2xl font-bold text-cyan-400">40.0s</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive NLE Toolbar (Cut, Split, Copy, Paste, Delete, Undo) -->
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4 bg-black/50 border border-white/[0.07] p-2.5 rounded-xl font-mono text-xs">
+                <div class="flex flex-wrap items-center gap-1.5">
+                    <button type="button" id="pr-btn-cut" class="px-3 py-1.5 rounded-lg bg-white text-black font-semibold hover:bg-zinc-200 transition">✂️ Razor Cut [Space/C]</button>
+                    <button type="button" id="pr-btn-split" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-zinc-200 border border-white/10 transition">⚡ Split Clip [S]</button>
+                    <button type="button" id="pr-btn-copy" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-zinc-200 border border-white/10 transition">📋 Copy [X]</button>
+                    <button type="button" id="pr-btn-paste" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-zinc-200 border border-white/10 transition">📥 Paste [V]</button>
+                    <button type="button" id="pr-btn-delete" class="px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/25 text-red-300 border border-red-500/25 transition">🗑️ Ripple Del [Del]</button>
+                    <button type="button" id="pr-btn-undo" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-zinc-300 border border-white/10 transition">↩ Undo [Z]</button>
+                </div>
+                <div class="flex items-center gap-3 text-[11px] text-zinc-400">
+                    <span>CLIPBOARD: <strong id="pr-clipboard-name" class="text-fuchsia-300">Empty</strong></span>
+                    <button type="button" id="pr-start-game" class="px-3.5 py-1.5 rounded-lg bg-fuchsia-500 hover:bg-fuchsia-400 text-black font-bold transition">▶ Start 40s Round</button>
+                </div>
+            </div>
+
+            <!-- Interactive NLE Timeline Canvas -->
+            <div class="rounded-xl overflow-hidden border border-white/10 bg-[#070709] relative">
+                <canvas id="premiere-game-canvas" width="980" height="230" class="w-full h-[230px] block cursor-pointer"></canvas>
+            </div>
+
+            <div class="mt-3 flex items-center justify-between font-mono text-xs">
+                <span id="pr-status-msg" class="text-cyan-400">READY: Click anywhere on the timeline or press SPACEBAR as the playhead hits golden markers!</span>
+                <span class="text-zinc-500">CLIPS ON TIMELINE: <strong id="pr-clip-count" class="text-white">5</strong></span>
+            </div>
+        </div>
+
+        <!-- =====================================================
+             GAME 2: DAVINCI RESOLVE — COLOR MATCH CHALLENGE
+             ===================================================== -->
+        <div id="game-davinci" class="game-panel carbon-card p-6 sm:p-8">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-5 mb-6 border-b border-white/10">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded bg-cyan-500/20 border border-cyan-400/40 font-mono text-[11px] text-cyan-300 font-bold">Dv // COLORISTS PRECISION LAB</span>
+                        <span id="dv-round-label" class="font-mono text-xs text-zinc-400">ROUND 1 OF 4: OOTY MIST TEAL &amp; ORANGE</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mt-1">DaVinci Color Match Challenge</h3>
+                    <p class="text-xs text-zinc-400 mt-0.5">
+                        Adjust the <strong>Temperature, Tint, Contrast, Saturation, and Lift</strong> sliders on the right until your live grade matches the Reference Master Frame to <strong>92%+ Accuracy</strong>!
+                    </p>
+                </div>
+
+                <!-- Match Accuracy & Score -->
+                <div class="flex items-center gap-6 font-mono">
+                    <div>
+                        <div class="text-[10px] text-zinc-500">MATCH ACCURACY</div>
+                        <div id="dv-accuracy-readout" class="text-2xl font-bold text-amber-400">64%</div>
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-zinc-500">SCORE</div>
+                        <div id="dv-score-readout" class="text-2xl font-bold text-white">0000</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <!-- Split Reference vs Player Grade Monitor -->
+                <div class="lg:col-span-7 space-y-3">
+                    <div class="rounded-xl overflow-hidden border border-white/10 bg-[#060608] relative">
+                        <canvas id="davinci-game-canvas" width="640" height="340" class="w-full h-[310px] block"></canvas>
+                        <div class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 border border-white/15 font-mono text-[10px] text-zinc-200">
+                            LEFT: TARGET REFERENCE MASTER
+                        </div>
+                        <div class="absolute top-3 right-3 px-2.5 py-1 rounded bg-black/80 border border-cyan-400/40 font-mono text-[10px] text-cyan-300">
+                            RIGHT: YOUR LIVE GRADE
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between font-mono text-xs text-zinc-400 px-1">
+                        <span id="dv-feedback-msg" class="text-cyan-400">Tune sliders until Accuracy reaches 92%+ then click Lock Grade!</span>
+                        <span>RGB PARADE SCOPE ACTIVE</span>
+                    </div>
+                </div>
+
+                <!-- Color Wheels / Sliders Control Deck -->
+                <div class="lg:col-span-5 space-y-4 bg-black/40 border border-white/[0.08] p-5 rounded-2xl">
+                    <div class="flex items-center justify-between font-mono text-xs border-b border-white/10 pb-2.5">
+                        <span class="text-white font-semibold">PRIMARY CORRECTION WHEELS</span>
+                        <button type="button" id="dv-hint-btn" class="text-cyan-400 hover:underline text-[11px]">💡 Auto-Hint</button>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between font-mono text-xs mb-1">
+                            <span class="text-zinc-400">COLOR TEMP (COOL ↔ WARM)</span>
+                            <span id="dv-val-temp" class="text-white">0</span>
+                        </div>
+                        <input type="range" id="dv-slider-temp" min="-50" max="50" value="0" class="studio-slider">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between font-mono text-xs mb-1">
+                            <span class="text-zinc-400">TINT (GREEN ↔ MAGENTA)</span>
+                            <span id="dv-val-tint" class="text-white">0</span>
+                        </div>
+                        <input type="range" id="dv-slider-tint" min="-50" max="50" value="0" class="studio-slider">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between font-mono text-xs mb-1">
+                            <span class="text-zinc-400">CONTRAST / GAIN</span>
+                            <span id="dv-val-con" class="text-white">100%</span>
+                        </div>
+                        <input type="range" id="dv-slider-con" min="60" max="150" value="100" class="studio-slider">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between font-mono text-xs mb-1">
+                            <span class="text-zinc-400">SATURATION</span>
+                            <span id="dv-val-sat" class="text-white">100%</span>
+                        </div>
+                        <input type="range" id="dv-slider-sat" min="0" max="180" value="100" class="studio-slider">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between font-mono text-xs mb-1">
+                            <span class="text-zinc-400">SHADOW LIFT (DARK ↔ BRIGHT)</span>
+                            <span id="dv-val-lift" class="text-white">0</span>
+                        </div>
+                        <input type="range" id="dv-slider-lift" min="-30" max="30" value="0" class="studio-slider">
+                    </div>
+
+                    <div class="pt-2 flex gap-2">
+                        <button type="button" id="dv-submit-grade" class="btn-chrome w-full justify-center py-2.5 text-xs">
+                            ✓ Lock In Grade &amp; Score Round
+                        </button>
+                        <button type="button" id="dv-next-target" class="btn-outline py-2.5 px-4 text-xs" title="Skip to next look">
+                            Next →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =====================================================
+             GAME 3: PHOTOSHOP — LAYER & MASK ALIGNMENT CHALLENGE
+             ===================================================== -->
+        <div id="game-photoshop" class="game-panel carbon-card p-6 sm:p-8">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-5 mb-6 border-b border-white/10">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded bg-sky-500/20 border border-sky-400/40 font-mono text-[11px] text-sky-300 font-bold">Ps // POSTER COMPOSITING CHALLENGE</span>
+                        <span id="ps-challenge-name" class="font-mono text-xs text-zinc-400">BLUEPRINT 01: THAMIZH KEY-ART POSTER</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mt-1">Photoshop Layer &amp; Alignment Studio</h3>
+                    <p class="text-xs text-zinc-400 mt-0.5">
+                        <strong>Drag layers directly on the canvas</strong> with your mouse (or use the layer controls) to align the Hero Subject, 3D Title, and Rim Glow Badge inside their cyan blueprint target guides!
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-6 font-mono">
+                    <div>
+                        <div class="text-[10px] text-zinc-500">ALIGNMENT PRECISION</div>
+                        <div id="ps-precision-readout" class="text-2xl font-bold text-sky-400">58%</div>
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-zinc-500">DESIGN SCORE</div>
+                        <div id="ps-score-readout" class="text-2xl font-bold text-white">0000</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <!-- Interactive Draggable Photoshop Canvas -->
+                <div class="lg:col-span-7 space-y-2">
+                    <div class="rounded-xl overflow-hidden border border-white/10 bg-[#08080C] relative">
+                        <canvas id="photoshop-game-canvas" width="640" height="340" class="w-full h-[310px] block cursor-move"></canvas>
+                        <div class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 border border-sky-400/40 font-mono text-[10px] text-sky-300 pointer-events-none">
+                            Ps SMART GUIDES: DRAG ELEMENTS TO DASHED BOXES
+                        </div>
+                    </div>
+                    <div class="flex justify-between font-mono text-xs text-zinc-400 px-1">
+                        <span id="ps-status-msg" class="text-sky-400">Click and drag any layer on the canvas to snap it into the target blueprint!</span>
+                        <span>SNAP THRESHOLD: 8px</span>
+                    </div>
+                </div>
+
+                <!-- Photoshop Layers Stack & Transform Properties -->
+                <div class="lg:col-span-5 space-y-4 bg-black/40 border border-white/[0.08] p-5 rounded-2xl">
+                    <div class="flex items-center justify-between font-mono text-xs border-b border-white/10 pb-2">
+                        <span class="text-white font-semibold">ACTIVE LAYER STACK (.PSD)</span>
+                        <button type="button" id="ps-scramble-btn" class="text-sky-400 hover:underline text-[11px]">↻ New Blueprint</button>
+                    </div>
+
+                    <!-- Layer Selector Buttons -->
+                    <div class="space-y-1.5 font-mono text-xs">
+                        <button type="button" class="ps-layer-select w-full text-left px-3 py-2 rounded-lg bg-sky-500/20 border border-sky-400 text-white flex justify-between items-center" data-layer-idx="0">
+                            <span>👁️ Layer 03: "THAMIZH" 3D Title</span>
+                            <span class="text-[10px] text-sky-300">TEXT</span>
+                        </button>
+                        <button type="button" class="ps-layer-select w-full text-left px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-zinc-300 flex justify-between items-center" data-layer-idx="1">
+                            <span>👁️ Layer 02: Director Silhouette Cutout</span>
+                            <span class="text-[10px] text-zinc-400">SMART OBJ</span>
+                        </button>
+                        <button type="button" class="ps-layer-select w-full text-left px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-zinc-300 flex justify-between items-center" data-layer-idx="2">
+                            <span>👁️ Layer 01: Cinema Award Stamp</span>
+                            <span class="text-[10px] text-zinc-400">VECTOR</span>
+                        </button>
+                    </div>
+
+                    <!-- Selected Layer Transform Sliders -->
+                    <div class="space-y-3 pt-1">
+                        <div>
+                            <div class="flex justify-between font-mono text-xs mb-1">
+                                <span class="text-zinc-400">SELECTED LAYER SCALE</span>
+                                <span id="ps-val-scale" class="text-white">100%</span>
+                            </div>
+                            <input type="range" id="ps-slider-scale" min="65" max="135" value="100" class="studio-slider">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between font-mono text-xs mb-1">
+                                <span class="text-zinc-400">NEON RIM DROP SHADOW</span>
+                                <span id="ps-val-glow" class="text-white">50%</span>
+                            </div>
+                            <input type="range" id="ps-slider-glow" min="0" max="100" value="50" class="studio-slider">
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex gap-2">
+                        <button type="button" id="ps-stamp-poster" class="btn-chrome w-full justify-center py-2.5 text-xs">
+                            ✓ Stamp &amp; Score Poster
+                        </button>
+                        <button type="button" id="ps-auto-align" class="btn-outline py-2.5 px-4 text-xs" title="Auto-Snap Layers">
+                            Auto-Snap
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         SLIDE 4: THE JOURNEY (INTERACTIVE EXPERIENCE TIMELINE)
+         ========================================================= -->
+    <section id="experience" class="reveal-slide">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div class="lg:col-span-5">
+                <div class="eyebrow">03 / Career &amp; Academic Background</div>
+                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">The Journey</h2>
+                <p class="text-sm text-zinc-400 mt-3 leading-relaxed">
+                    Over 4 years of hands-on production across commercial studios, live college media houses, and formal academic training in Visual &amp; Media Communication.
+                </p>
+            </div>
+
+            <div class="lg:col-span-7 carbon-card p-7 sm:p-10">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="font-mono text-xs text-zinc-400">2022 — 2026</span>
+                    <h3 class="text-xl font-bold text-white mt-1">Video Editor &amp; Cinematographer</h3>
+                    <div class="font-mono text-xs text-zinc-500 mb-2">Kavi Pixels Studio &amp; Freelance</div>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Managed end-to-end video production for weddings and commercial films. Responsible for directing shoots, multi-track timeline editing, sound design, and final color grading.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="font-mono text-xs text-zinc-400">2024 — 2026</span>
+                    <h3 class="text-xl font-bold text-white mt-1">Media Team Editor</h3>
+                    <div class="font-mono text-xs text-zinc-500 mb-2">Holy Cross College Media House</div>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Created high-energy event highlight films and managed rapid-turnaround live video editing packages for massive college cultural and academic events.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="font-mono text-xs text-zinc-400">2021 — 2026</span>
+                    <h3 class="text-xl font-bold text-white mt-1">M.Sc. &amp; B.Sc. Visual / Media Communication</h3>
+                    <div class="font-mono text-xs text-zinc-500 mb-2">Thanthai Periyar College &amp; Holy Cross College (Autonomous)</div>
+                    <p class="text-sm text-zinc-400 leading-relaxed">
+                        Bachelor's in Visual Communication at Thanthai Periyar College (Autonomous) and Master's in Media and Communication at Holy Cross College (Autonomous), specializing in visual storytelling and cinema arts.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         SLIDE 5: SOFTWARE SKILLS WITH INTERACTIVE MOTION CURVES
+         ========================================================= -->
+    <section id="skills" class="reveal-slide">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <div>
+                <div class="eyebrow">04 / Technical Proficiency</div>
+                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">Software Arsenal</h2>
+            </div>
+
+            <!-- Interactive Keyframe Easing Curve Selector -->
+            <div class="inline-flex flex-wrap items-center gap-1.5 bg-white/[0.03] border border-white/10 p-1.5 rounded-full font-mono text-xs">
+                <span class="text-zinc-500 px-2.5">EASING:</span>
+                <button type="button" class="ease-btn px-3 py-1 rounded-full bg-white text-black font-semibold transition" data-ease="cubic-bezier(0.22, 1, 0.36, 1)" data-curve="easeOut">Easy Ease</button>
+                <button type="button" class="ease-btn px-3 py-1 rounded-full text-zinc-400 hover:text-white transition" data-ease="cubic-bezier(0.34, 1.56, 0.64, 1)" data-curve="spring">Spring Overshoot</button>
+                <button type="button" class="ease-btn px-3 py-1 rounded-full text-zinc-400 hover:text-white transition" data-ease="linear" data-curve="linear">Linear</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="skills-grid">
+            <!-- Premiere Pro (95%) -->
+            <div class="carbon-card p-6 skill-card" data-pct="95" data-color="#D977FF">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-[#180624] border border-fuchsia-400/50 flex items-center justify-center font-bold text-fuchsia-300">Pr</div>
+                        <div>
+                            <div class="font-semibold text-white">Premiere Pro</div>
+                            <div class="font-mono text-[11px] text-zinc-500">VIDEO EDITING</div>
+                        </div>
+                    </div>
+                    <span class="font-mono text-lg font-bold text-white">95%</span>
+                </div>
+                <canvas class="skill-wave-canvas w-full h-10 mb-3 rounded bg-black/40" width="260" height="40"></canvas>
+                <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div class="skill-bar-fill h-full bg-fuchsia-400 rounded-full" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- Photoshop (90%) -->
+            <div class="carbon-card p-6 skill-card" data-pct="90" data-color="#38BDF8">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-[#061826] border border-sky-400/50 flex items-center justify-center font-bold text-sky-300">Ps</div>
+                        <div>
+                            <div class="font-semibold text-white">Photoshop</div>
+                            <div class="font-mono text-[11px] text-zinc-500">GRAPHIC DESIGN</div>
+                        </div>
+                    </div>
+                    <span class="font-mono text-lg font-bold text-white">90%</span>
+                </div>
+                <canvas class="skill-wave-canvas w-full h-10 mb-3 rounded bg-black/40" width="260" height="40"></canvas>
+                <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div class="skill-bar-fill h-full bg-sky-400 rounded-full" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- Lightroom (90%) -->
+            <div class="carbon-card p-6 skill-card" data-pct="90" data-color="#67E8F9">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-[#071B24] border border-cyan-300/50 flex items-center justify-center font-bold text-cyan-200">Lr</div>
+                        <div>
+                            <div class="font-semibold text-white">Lightroom</div>
+                            <div class="font-mono text-[11px] text-zinc-500">RAW PHOTO GRADING</div>
+                        </div>
+                    </div>
+                    <span class="font-mono text-lg font-bold text-white">90%</span>
+                </div>
+                <canvas class="skill-wave-canvas w-full h-10 mb-3 rounded bg-black/40" width="260" height="40"></canvas>
+                <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div class="skill-bar-fill h-full bg-cyan-300 rounded-full" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- DaVinci Resolve (50%) -->
+            <div class="carbon-card p-6 skill-card" data-pct="50" data-color="#22D3EE">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-cyan-400/50 flex items-center justify-center font-mono font-bold text-cyan-300">Dv</div>
+                        <div>
+                            <div class="font-semibold text-white">DaVinci Resolve</div>
+                            <div class="font-mono text-[11px] text-zinc-500">COLOR GRADING</div>
+                        </div>
+                    </div>
+                    <span class="font-mono text-lg font-bold text-white">50%</span>
+                </div>
+                <canvas class="skill-wave-canvas w-full h-10 mb-3 rounded bg-black/40" width="260" height="40"></canvas>
+                <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div class="skill-bar-fill h-full bg-cyan-400 rounded-full" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- After Effects (35%) -->
+            <div class="carbon-card p-6 skill-card" data-pct="35" data-color="#A78BFA">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-[#130D26] border border-violet-400/50 flex items-center justify-center font-bold text-violet-300">Ae</div>
+                        <div>
+                            <div class="font-semibold text-white">After Effects</div>
+                            <div class="font-mono text-[11px] text-zinc-500">MOTION GRAPHICS</div>
+                        </div>
+                    </div>
+                    <span class="font-mono text-lg font-bold text-white">35%</span>
+                </div>
+                <canvas class="skill-wave-canvas w-full h-10 mb-3 rounded bg-black/40" width="260" height="40"></canvas>
+                <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div class="skill-bar-fill h-full bg-violet-400 rounded-full" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- Illustrator (35%) -->
+            <div class="carbon-card p-6 skill-card" data-pct="35" data-color="#FB923C">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-[#241205] border border-orange-400/50 flex items-center justify-center font-bold text-orange-300">Ai</div>
+                        <div>
+                            <div class="font-semibold text-white">Illustrator</div>
+                            <div class="font-mono text-[11px] text-zinc-500">VECTOR DESIGN</div>
+                        </div>
+                    </div>
+                    <span class="font-mono text-lg font-bold text-white">35%</span>
+                </div>
+                <canvas class="skill-wave-canvas w-full h-10 mb-3 rounded bg-black/40" width="260" height="40"></canvas>
+                <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div class="skill-bar-fill h-full bg-orange-400 rounded-full" style="width: 0%;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         SLIDE 6: MINIMALIST CONTACT SECTION (NO DUPLICATE PHOTO)
+         ========================================================= -->
+    <section id="contact" class="reveal-slide pb-28">
+        <div class="carbon-card p-10 sm:p-16 text-center max-w-4xl mx-auto">
+            <div class="eyebrow justify-center">05 / Initiate Collaboration</div>
+            <h2 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight mt-2">
+                Storytelling,<br>crafted frame by frame.
+            </h2>
+            <p class="text-base sm:text-lg text-zinc-400 max-w-xl mx-auto mt-4 leading-relaxed">
+                Let's collaborate on your next commercial, event film, or design project. Based in <strong class="text-white font-medium">The Nilgiris</strong> — available for assignments worldwide.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-4 mt-8">
+                <a href="mailto:tamiln7258@gmail.com" class="btn-chrome">
+                    <span>✉️ tamiln7258@gmail.com</span>
+                </a>
+                <a href="tel:9686206933" class="btn-outline">
+                    <span>📞 +91 96862 06933</span>
+                </a>
+                <button type="button" id="copy-email-btn" class="btn-outline font-mono text-xs">
+                    📋 Copy Email
+                </button>
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-white/[0.07] flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-zinc-500">
+                <span>© 2026 RAJESH S. (THAMIZH)</span>
+                <span>THAMIZH.FUN // INTERACTIVE STUDIO PORTFOLIO</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Minimal Bottom Timecode Scrubber Bar -->
+    <div class="bottom-scrub-dock">
+        <span class="text-zinc-400 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+            <span>PLAYBACK</span>
+        </span>
+        <div class="scrub-track" id="bottom-scrub-track" title="Click to scrub page timeline">
+            <div class="scrub-progress" id="bottom-scrub-fill"></div>
+        </div>
+        <span id="bottom-timecode" class="text-zinc-300">01:00:00:00</span>
     </div>
-</section>
 
-<style>
-    .contact-container-wrapper { 
-        padding: 60px; 
-        max-width: 1000px; 
-        margin: 0 auto; 
-        width: 90%; 
-    }
-    
-    .contact-grid { 
-        display: grid; 
-        grid-template-columns: 1fr 1fr; 
-        gap: 40px; 
-        align-items: center; 
-    }
-
-    .contact-photo { 
-        width: 100%; 
-        height: 600px; 
-        object-fit: cover; 
-        border: 4px solid #333; 
-        border-radius: 4px; 
-        box-shadow: 0 20px 40px rgba(0,0,0,0.9);
-    }
-
-    @media (max-width: 900px) {
-        .contact-grid { 
-            grid-template-columns: 1fr; 
-            text-align: center; 
+    <script>
+        /* =========================================================
+           1. SUBTLE WEB AUDIO FEEDBACK (SYNTHESIZED MICRO-CLICKS)
+           ========================================================= */
+        let audioCtx = null;
+        function playTone(freq = 800, dur = 0.06, type = 'triangle', vol = 0.12) {
+            try {
+                const AC = window.AudioContext || window.webkitAudioContext;
+                if (!AC) return;
+                if (!audioCtx) audioCtx = new AC();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, now);
+                osc.frequency.exponentialRampToValueAtTime(Math.max(80, freq * 0.35), now + dur);
+                gain.gain.setValueAtTime(vol, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + dur + 0.01);
+            } catch (e) {}
         }
-        .contact-text-box { 
-            text-align: center !important; 
-        }
-        .hero-actions { 
-            justify-content: center !important; 
-        }
-        .contact-photo { 
-            height: 450px; 
-            max-width: 280px; 
-            margin: 0 auto 20px auto; 
-        }
-        .contact-container-wrapper { 
-            padding: 30px 20px; 
-        }
-    }
-</style>
 
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-<script>
-    gsap.registerPlugin(ScrollTrigger);
-
-    /* =========================================
-       SCROLL-CONTROLLED VIDEO SCRUBBING
-       ========================================= */
-    const bgVideo = document.getElementById('bg-video');
-    
-    function initVideoScrub() {
-        const duration = bgVideo.duration || 1; 
-
-        gsap.to(bgVideo, {
-            currentTime: duration,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "body",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1.5,
+        /* =========================================================
+           2. GLOBAL MOUSE SPOTLIGHT & HERO PORTRAIT INTERACTION
+           ========================================================= */
+        const ambientMesh = document.getElementById('ambient-mesh');
+        window.addEventListener('mousemove', (e) => {
+            if (ambientMesh) {
+                ambientMesh.style.setProperty('--cursor-x', `${e.clientX}px`);
+                ambientMesh.style.setProperty('--cursor-y', `${e.clientY}px`);
             }
         });
-    }
 
-    bgVideo.addEventListener('canplaythrough', () => {
-        ScrollTrigger.refresh();
-        initVideoScrub();
-    }, { once: true });
+        // Radial spotlight on every .carbon-card when hovered
+        document.querySelectorAll('.carbon-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--card-mouse-x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--card-mouse-y', `${e.clientY - rect.top}px`);
+            });
+        });
 
-    if (bgVideo.readyState >= 3) { initVideoScrub(); }
+        // Hero Single Portrait Focus Reticle & LUT Switcher
+        const portraitStage = document.getElementById('portrait-stage');
+        const focusBox = document.getElementById('hero-focus-box');
+        const xyReadout = document.getElementById('portrait-xy-readout');
+        const ownerPhoto = document.getElementById('owner-single-photo');
 
-    /* =========================================
-       MOBILE BACKGROUND IMAGE PARALLAX EFFECT
-       ========================================= */
-    let mm = gsap.matchMedia();
-    
-    mm.add("(max-width: 900px)", () => {
-        gsap.to(".bg-mobile-img", {
-            scale: 1.15,          
-            y: "5vh",             
-            ease: "none",
-            scrollTrigger: {
-                trigger: "body",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1          
+        if (portraitStage && focusBox) {
+            portraitStage.addEventListener('mousemove', (e) => {
+                const rect = portraitStage.getBoundingClientRect();
+                const xPct = Math.max(15, Math.min(85, ((e.clientX - rect.left) / rect.width) * 100));
+                const yPct = Math.max(15, Math.min(82, ((e.clientY - rect.top) / rect.height) * 100));
+                focusBox.style.left = `${xPct}%`;
+                focusBox.style.top = `${yPct}%`;
+                if (xyReadout) xyReadout.textContent = `AF [${Math.round(xPct)}, ${Math.round(yPct)}]`;
+            });
+        }
+
+        const portraitGrades = [
+            { name: 'LUT: Natural', filter: 'contrast(1.06) grayscale(10%)' },
+            { name: 'LUT: Teal/Orange', filter: 'contrast(1.18) saturate(1.3) hue-rotate(-6deg)' },
+            { name: 'LUT: Noir B&W', filter: 'grayscale(100%) contrast(1.32)' },
+            { name: 'LUT: Warm Film', filter: 'sepia(22%) contrast(1.12) saturate(1.2)' }
+        ];
+        let currentGradeIdx = 0;
+        document.getElementById('cycle-portrait-grade')?.addEventListener('click', function() {
+            currentGradeIdx = (currentGradeIdx + 1) % portraitGrades.length;
+            this.textContent = portraitGrades[currentGradeIdx].name;
+            if (ownerPhoto) ownerPhoto.style.filter = portraitGrades[currentGradeIdx].filter;
+            playTone(1100, 0.05);
+        });
+
+        // Local photo file preview fallback
+        document.getElementById('local-photo-input')?.addEventListener('change', (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                if (ownerPhoto) {
+                    ownerPhoto.src = ev.target.result;
+                    ownerPhoto.style.display = 'block';
+                    document.getElementById('portrait-fallback-canvas')?.classList.add('hidden');
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Clean Studio Fallback Silhouette if offline
+        const fallbackCanvas = document.getElementById('portrait-fallback-canvas');
+        if (fallbackCanvas) {
+            const fctx = fallbackCanvas.getContext('2d');
+            if (fctx) {
+                const g = fctx.createLinearGradient(0, 0, 400, 500);
+                g.addColorStop(0, '#09090D');
+                g.addColorStop(1, '#14141C');
+                fctx.fillStyle = g;
+                fctx.fillRect(0, 0, 400, 500);
+                fctx.strokeStyle = 'rgba(255,255,255,0.22)';
+                fctx.lineWidth = 2;
+                fctx.beginPath();
+                fctx.arc(200, 175, 52, 0, Math.PI * 2);
+                fctx.stroke();
+                fctx.beginPath();
+                fctx.moveTo(100, 440);
+                fctx.quadraticCurveTo(200, 245, 300, 440);
+                fctx.stroke();
+            }
+        }
+
+        /* =========================================================
+           3. TOPIC-SPECIFIC INTERACTIVE PROJECT CANVASES (6 TOPICS)
+           ========================================================= */
+        const topicStates = new Map();
+        document.querySelectorAll('.topic-canvas').forEach(canvas => {
+            topicStates.set(canvas, {
+                hovered: false,
+                mx: 0.5,
+                my: 0.5,
+                topic: canvas.dataset.topic
+            });
+
+            const stage = canvas.parentElement;
+            stage.addEventListener('mouseenter', () => {
+                const st = topicStates.get(canvas);
+                if (st) st.hovered = true;
+            });
+            stage.addEventListener('mouseleave', () => {
+                const st = topicStates.get(canvas);
+                if (st) {
+                    st.hovered = false;
+                    st.mx = 0.5;
+                    st.my = 0.5;
+                }
+            });
+            stage.addEventListener('mousemove', (e) => {
+                const rect = stage.getBoundingClientRect();
+                const st = topicStates.get(canvas);
+                if (st) {
+                    st.mx = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                    st.my = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+                }
+            });
+        });
+
+        let globalFrame = 0;
+        function renderTopicCanvases() {
+            globalFrame++;
+            topicStates.forEach((st, canvas) => {
+                if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
+                    canvas.width = canvas.clientWidth || 340;
+                    canvas.height = canvas.clientHeight || 196;
+                }
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
+                const w = canvas.width, h = canvas.height;
+                ctx.clearRect(0, 0, w, h);
+
+                const mx = st.hovered ? st.mx : 0.5 + Math.sin(globalFrame * 0.025) * 0.22;
+                const my = st.hovered ? st.my : 0.5 + Math.cos(globalFrame * 0.02) * 0.15;
+
+                if (st.topic === 'commercial') {
+                    // TOPIC 1: Commercial Videos — 2.39:1 Cinema Letterbox + Anamorphic Horizontal Streak & Focus Rack
+                    ctx.fillStyle = '#07070A';
+                    ctx.fillRect(0, 0, w, h);
+
+                    // Anamorphic radial glow tracking cursor X/Y
+                    const cx = mx * w, cy = my * h;
+                    const rad = ctx.createRadialGradient(cx, cy, 4, cx, cy, w * 0.55);
+                    rad.addColorStop(0, 'rgba(217, 119, 255, 0.48)');
+                    rad.addColorStop(0.45, 'rgba(34, 211, 238, 0.18)');
+                    rad.addColorStop(1, 'transparent');
+                    ctx.fillStyle = rad;
+                    ctx.fillRect(0, 0, w, h);
+
+                    // True Anamorphic blue/cyan horizontal lens streak
+                    const streakGrad = ctx.createLinearGradient(0, cy, w, cy);
+                    streakGrad.addColorStop(0, 'transparent');
+                    streakGrad.addColorStop(Math.max(0.05, mx - 0.35), 'rgba(34, 211, 238, 0.1)');
+                    streakGrad.addColorStop(mx, 'rgba(255, 255, 255, 0.95)');
+                    streakGrad.addColorStop(Math.min(0.95, mx + 0.35), 'rgba(34, 211, 238, 0.1)');
+                    streakGrad.addColorStop(1, 'transparent');
+                    ctx.fillStyle = streakGrad;
+                    ctx.fillRect(0, cy - 1.5, w, 3);
+
+                    // Cinema 2.39:1 Letterbox bars
+                    ctx.fillStyle = '#020203';
+                    ctx.fillRect(0, 0, w, 28);
+                    ctx.fillRect(0, h - 28, w, 28);
+
+                    // Focus Rack Distance Scale at bottom
+                    ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+                    ctx.strokeRect(cx - 26, cy - 18, 52, 36);
+                    ctx.fillStyle = '#FAFAFA';
+                    ctx.font = '10px "JetBrains Mono", monospace';
+                    ctx.fillText(`${(1.2 + mx * 8.8).toFixed(1)}m FOCUS`, cx - 28, cy + 32);
+
+                } else if (st.topic === 'reels') {
+                    // TOPIC 2: Social Media Reels — 9:16 Vertical Smartphone Frame + Kinetic Words & Beat Bars
+                    const pw = 84, ph = h - 36, px = w / 2 - pw / 2, py = 24;
+                    ctx.strokeStyle = st.hovered ? '#FAFAFA' : 'rgba(255,255,255,0.28)';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(px, py, pw, ph);
+
+                    // Dynamic Kinetic Typography inside phone screen
+                    const words = ['HOOK', 'PACE', 'CUT!', 'VIRAL'];
+                    const wordIdx = Math.floor((mx * 10 + globalFrame * 0.04) % words.length);
+                    ctx.fillStyle = '#D977FF';
+                    ctx.fillRect(px + 10, py + 32, pw - 20, 24);
+                    ctx.fillStyle = '#050505';
+                    ctx.font = 'bold 12px "Inter", sans-serif';
+                    ctx.fillText(words[wordIdx], px + 18, py + 48);
+
+                    // Audio Beat Waveform bars on both sides of phone
+                    for (let i = 0; i < 6; i++) {
+                        const amp = Math.abs(Math.sin(globalFrame * (st.hovered ? 0.18 : 0.07) + i + mx * 5)) * 34 + 6;
+                        ctx.fillStyle = i % 2 === 0 ? '#22D3EE' : '#D977FF';
+                        ctx.fillRect(px - 42 + i * 6, h / 2 - amp / 2, 3.5, amp);
+                        ctx.fillRect(px + pw + 10 + i * 6, h / 2 - amp / 2, 3.5, amp);
+                    }
+
+                } else if (st.topic === 'events') {
+                    // TOPIC 3: Event Coverage — 4-Camera Live Multicam Switcher based on hover quadrant
+                    const padTop = 34, padSide = 18;
+                    const gridW = w - padSide * 2, gridH = h - padTop - 22;
+                    const halfW = gridW / 2, halfH = gridH / 2;
+
+                    const activeCam = (my < 0.5 ? 0 : 2) + (mx < 0.5 ? 0 : 1);
+                    const camLabels = ['CAM A: WIDE STAGE', 'CAM B: CLOSEUP 85MM', 'CAM C: GIMBAL TRACK', 'CAM D: CROWD REACTION'];
+
+                    for (let c = 0; c < 4; c++) {
+                        const cx = padSide + (c % 2) * halfW;
+                        const cy = padTop + Math.floor(c / 2) * halfH;
+                        const isPgm = c === activeCam;
+
+                        ctx.fillStyle = isPgm ? 'rgba(239, 68, 68, 0.12)' : 'rgba(255,255,255,0.02)';
+                        ctx.fillRect(cx + 2, cy + 2, halfW - 4, halfH - 4);
+
+                        ctx.strokeStyle = isPgm ? '#EF4444' : 'rgba(255,255,255,0.14)';
+                        ctx.lineWidth = isPgm ? 2 : 1;
+                        ctx.strokeRect(cx + 2, cy + 2, halfW - 4, halfH - 4);
+
+                        ctx.fillStyle = isPgm ? '#EF4444' : '#71717A';
+                        ctx.font = 'bold 9px "JetBrains Mono", monospace';
+                        ctx.fillText(camLabels[c], cx + 8, cy + 16);
+
+                        // Simulated stage light / subject movement inside each cam
+                        ctx.fillStyle = isPgm ? '#FAFAFA' : 'rgba(255,255,255,0.25)';
+                        ctx.beginPath();
+                        ctx.arc(cx + halfW / 2 + Math.sin(globalFrame * 0.04 + c) * 14, cy + halfH / 2 + 6, isPgm ? 7 : 5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                } else if (st.topic === 'design') {
+                    // TOPIC 4: Graphic Design — Interactive Bezier Pen Curve & Tangent Handles
+                    const startX = 42, startY = h - 38;
+                    const endX = w - 42, endY = 50;
+                    const ctrlX = mx * w;
+                    const ctrlY = Math.max(32, my * h);
+
+                    // Tangent handle lines
+                    ctx.strokeStyle = 'rgba(56, 189, 248, 0.55)';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(ctrlX, ctrlY);
+                    ctx.lineTo(endX, endY);
+                    ctx.stroke();
+
+                    // Smooth Cubic Bezier Curve
+                    ctx.strokeStyle = '#FAFAFA';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.quadraticCurveTo(ctrlX, ctrlY, endX, endY);
+                    ctx.stroke();
+
+                    // Anchor Nodes
+                    [[startX, startY], [endX, endY], [ctrlX, ctrlY]].forEach(([nx, ny], idx) => {
+                        ctx.fillStyle = idx === 2 ? '#38BDF8' : '#FAFAFA';
+                        ctx.fillRect(nx - 4.5, ny - 4.5, 9, 9);
+                    });
+
+                    ctx.fillStyle = '#38BDF8';
+                    ctx.font = '10px "JetBrains Mono", monospace';
+                    ctx.fillText(`NODE (${Math.round(ctrlX)}, ${Math.round(ctrlY)})`, Math.min(w - 115, ctrlX + 10), Math.max(48, ctrlY - 8));
+
+                } else if (st.topic === 'albums') {
+                    // TOPIC 5: Album Designs — Interactive 3D Panoramic Page Flip on Cursor X
+                    const bookW = w - 76, bookH = h - 62;
+                    const bx = 38, by = 40;
+                    const spineX = w / 2;
+
+                    // Left & Right Base Spread
+                    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+                    ctx.strokeStyle = 'rgba(255,255,255,0.28)';
+                    ctx.lineWidth = 1.5;
+                    ctx.fillRect(bx, by, bookW, bookH);
+                    ctx.strokeRect(bx, by, bookW, bookH);
+
+                    // Photo frames on spread
+                    ctx.fillStyle = 'rgba(255,255,255,0.12)';
+                    ctx.fillRect(bx + 12, by + 12, bookW / 2 - 22, bookH - 24);
+                    ctx.fillRect(spineX + 10, by + 12, bookW / 2 - 22, bookH / 2 - 16);
+                    ctx.fillRect(spineX + 10, by + bookH / 2 + 4, bookW / 2 - 22, bookH / 2 - 16);
+
+                    // Interactive Turning Page controlled by mx
+                    const flipProgress = (mx - 0.5) * (bookW / 2);
+                    ctx.fillStyle = 'rgba(250, 250, 250, 0.16)';
+                    ctx.strokeStyle = '#FBBF24';
+                    ctx.beginPath();
+                    ctx.moveTo(spineX, by);
+                    ctx.lineTo(spineX + flipProgress, by - 8 * Math.abs(mx - 0.5));
+                    ctx.lineTo(spineX + flipProgress, by + bookH + 8 * Math.abs(mx - 0.5));
+                    ctx.lineTo(spineX, by + bookH);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+
+                } else if (st.topic === 'photo') {
+                    // TOPIC 6: Photography — Mechanical DSLR Aperture Blades controlled by Cursor X
+                    const cx = w / 2, cy = h / 2 + 8;
+                    const outerR = 54;
+                    const openRatio = 0.25 + mx * 0.58; // f/16 tight to f/1.4 wide open
+                    const innerR = outerR * openRatio;
+                    const fStop = (16 - mx * 14.6).toFixed(1);
+
+                    // Outer lens barrel ring
+                    ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
+                    ctx.stroke();
+
+                    // 8 Mechanical Iris Blades
+                    const blades = 8;
+                    for (let i = 0; i < blades; i++) {
+                        const a1 = (i * Math.PI * 2) / blades + mx * 0.5;
+                        const a2 = ((i + 1) * Math.PI * 2) / blades + mx * 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(cx + Math.cos(a1) * outerR, cy + Math.sin(a1) * outerR);
+                        ctx.lineTo(cx + Math.cos(a2) * innerR, cy + Math.sin(a2) * innerR);
+                        ctx.strokeStyle = 'rgba(34, 211, 238, 0.7)';
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                    }
+
+                    // Inner aperture glow
+                    const irisGlow = ctx.createRadialGradient(cx, cy, 2, cx, cy, innerR);
+                    irisGlow.addColorStop(0, 'rgba(34, 211, 238, 0.45)');
+                    irisGlow.addColorStop(1, 'transparent');
+                    ctx.fillStyle = irisGlow;
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, innerR, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#FAFAFA';
+                    ctx.font = 'bold 11px "JetBrains Mono", monospace';
+                    ctx.fillText(`f/${fStop}`, cx - 18, cy + 4);
+                }
+            });
+            requestAnimationFrame(renderTopicCanvases);
+        }
+        renderTopicCanvases();
+
+        /* =========================================================
+           4. STUDIO GAMES TAB SWITCHER
+           ========================================================= */
+        document.querySelectorAll('.game-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.game-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.game-panel').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                const panel = document.getElementById(tab.dataset.gameTab);
+                if (panel) panel.classList.add('active');
+                playTone(920, 0.05);
+            });
+        });
+
+        /* =========================================================
+           5. GAME 1: PREMIERE PRO — TIMELINE CUT MASTER
+           ========================================================= */
+        const prCanvas = document.getElementById('premiere-game-canvas');
+        const prCtx = prCanvas ? prCanvas.getContext('2d') : null;
+        let prScore = 0, prCombo = 0, prTime = 40.0, prRunning = false, prTimerId = null;
+        let prPlayhead = 120, prDir = 1;
+        let prClipboard = null;
+        let prHistory = [];
+        let prClips = [
+            { x: 90, w: 150, name: '01_Hero_RAW.mov', col: 'rgba(217,119,255,0.28)', border: '#D977FF' },
+            { x: 250, w: 165, name: '02_Commercial_4K.mov', col: 'rgba(56,189,248,0.25)', border: '#38BDF8' },
+            { x: 425, w: 155, name: '03_Reels_Hook.mp4', col: 'rgba(167,139,250,0.28)', border: '#A78BFA' },
+            { x: 590, w: 170, name: '04_Event_Sync.mov', col: 'rgba(34,211,238,0.25)', border: '#22D3EE' },
+            { x: 770, w: 150, name: '05_Final_Master.mov', col: 'rgba(251,146,60,0.25)', border: '#FB923C' }
+        ];
+        let prTargets = [180, 340, 510, 680, 830];
+
+        function savePrState() {
+            prHistory.push(JSON.parse(JSON.stringify(prClips)));
+            if (prHistory.length > 10) prHistory.shift();
+        }
+
+        function updatePrUI(msg) {
+            document.getElementById('pr-score').textContent = String(prScore).padStart(4, '0');
+            document.getElementById('pr-combo').textContent = `${prCombo}x`;
+            document.getElementById('pr-clip-count').textContent = prClips.length;
+            const rank = document.getElementById('pr-rank-badge');
+            if (prScore >= 1500) rank.textContent = 'RANK: ★ THAMIZH MASTER EDITOR ★';
+            else if (prScore >= 700) rank.textContent = 'RANK: SENIOR COMMERCIAL EDITOR';
+            else rank.textContent = 'RANK: TIMELINE EDITOR';
+            if (msg) document.getElementById('pr-status-msg').textContent = msg;
+        }
+
+        function triggerPrRazorCut() {
+            let bestIdx = -1, minDist = 999;
+            prTargets.forEach((tx, idx) => {
+                const d = Math.abs(prPlayhead - tx);
+                if (d < minDist) { minDist = d; bestIdx = idx; }
+            });
+
+            if (bestIdx !== -1 && minDist <= 28) {
+                prCombo++;
+                const pts = (minDist <= 10 ? 150 : 90) * Math.min(prCombo, 5);
+                prScore += pts;
+                prTargets[bestIdx] = 110 + Math.random() * ((prCanvas?.width || 880) - 180);
+                playTone(1350, 0.07);
+                updatePrUI(`✂️ ${minDist <= 10 ? 'FRAME-PERFECT CUT!' : 'CLEAN CUT!'} +${pts} PTS (${prCombo}x COMBO)`);
+            } else {
+                splitPrClipAtPlayhead();
+            }
+        }
+
+        function splitPrClipAtPlayhead() {
+            savePrState();
+            for (let i = 0; i < prClips.length; i++) {
+                const c = prClips[i];
+                if (prPlayhead > c.x + 20 && prPlayhead < c.x + c.w - 20) {
+                    const leftW = prPlayhead - c.x - 3;
+                    const rightW = (c.x + c.w) - prPlayhead - 3;
+                    const newClip = { x: prPlayhead + 3, w: rightW, name: c.name.replace('.mov', '_B.mov'), col: c.col, border: c.border };
+                    c.w = leftW;
+                    prClips.splice(i + 1, 0, newClip);
+                    prScore += 40;
+                    playTone(980, 0.06);
+                    updatePrUI(`⚡ SPLIT "${c.name}" INTO TWO SEGMENTS (+40 PTS)`);
+                    return;
+                }
+            }
+            playTone(500, 0.05);
+            updatePrUI('✂️ RAZOR TRIGGERED — HIT GOLDEN BEAT LINES FOR COMBO POINTS!');
+        }
+
+        document.getElementById('pr-btn-cut')?.addEventListener('click', triggerPrRazorCut);
+        document.getElementById('pr-btn-split')?.addEventListener('click', splitPrClipAtPlayhead);
+        document.getElementById('pr-btn-copy')?.addEventListener('click', () => {
+            const c = prClips.find(cl => prPlayhead >= cl.x && prPlayhead <= cl.x + cl.w) || prClips[0];
+            if (!c) return;
+            prClipboard = JSON.parse(JSON.stringify(c));
+            document.getElementById('pr-clipboard-name').textContent = c.name;
+            playTone(1050, 0.05);
+            updatePrUI(`📋 COPIED "${c.name}" TO CLIPBOARD`);
+        });
+        document.getElementById('pr-btn-paste')?.addEventListener('click', () => {
+            savePrState();
+            const src = prClipboard || prClips[0];
+            if (!src) return;
+            prClips.push({
+                x: Math.max(85, Math.min((prCanvas?.width || 880) - 140, prPlayhead)),
+                w: Math.min(125, src.w),
+                name: src.name,
+                col: src.col,
+                border: src.border
+            });
+            prScore += 80;
+            playTone(1220, 0.07);
+            updatePrUI(`📥 PASTED "${src.name}" AT PLAYHEAD (+80 PTS)`);
+        });
+        document.getElementById('pr-btn-delete')?.addEventListener('click', () => {
+            if (prClips.length <= 2) {
+                updatePrUI('⚠️ KEEP AT LEAST 2 MASTER CLIPS ON TIMELINE');
+                return;
+            }
+            savePrState();
+            const idx = prClips.findIndex(cl => prPlayhead >= cl.x && prPlayhead <= cl.x + cl.w);
+            const removed = prClips.splice(idx !== -1 ? idx : prClips.length - 1, 1)[0];
+            playTone(420, 0.08, 'sawtooth');
+            updatePrUI(`🗑️ RIPPLE DELETED "${removed.name}"`);
+        });
+        document.getElementById('pr-btn-undo')?.addEventListener('click', () => {
+            if (!prHistory.length) return;
+            prClips = prHistory.pop();
+            playTone(750, 0.05);
+            updatePrUI('↩ UNDO RESTORED PREVIOUS TIMELINE STATE');
+        });
+
+        document.getElementById('pr-start-game')?.addEventListener('click', () => {
+            prRunning = true;
+            prScore = 0;
+            prCombo = 0;
+            prTime = 40.0;
+            playTone(1400, 0.09);
+            updatePrUI('🎬 40s TIMELINE CHALLENGE LIVE! HIT [SPACE] ON GOLDEN MARKERS!');
+            if (prTimerId) clearInterval(prTimerId);
+            prTimerId = setInterval(() => {
+                if (!prRunning) return;
+                prTime = Math.max(0, prTime - 0.1);
+                document.getElementById('pr-timer').textContent = `${prTime.toFixed(1)}s`;
+                if (prTime <= 0) {
+                    prRunning = false;
+                    clearInterval(prTimerId);
+                    updatePrUI(`🏁 ROUND COMPLETE! FINAL SCORE: ${prScore} PTS`);
+                }
+            }, 100);
+        });
+
+        prCanvas?.addEventListener('click', (e) => {
+            const rect = prCanvas.getBoundingClientRect();
+            prPlayhead = ((e.clientX - rect.left) / rect.width) * prCanvas.width;
+            triggerPrRazorCut();
+        });
+
+        function renderPremiereGame() {
+            if (prCanvas && prCtx) {
+                if (prCanvas.width !== prCanvas.clientWidth && prCanvas.clientWidth > 0) {
+                    prCanvas.width = prCanvas.clientWidth;
+                }
+                const w = prCanvas.width, h = prCanvas.height;
+                prCtx.clearRect(0, 0, w, h);
+
+                // Track headers & lanes
+                const tracks = [
+                    { y: 22, h: 48, label: 'V2 FX' },
+                    { y: 78, h: 64, label: 'V1 VIDEO' },
+                    { y: 150, h: 52, label: 'A1 AUDIO' }
+                ];
+                tracks.forEach(t => {
+                    prCtx.fillStyle = 'rgba(255,255,255,0.025)';
+                    prCtx.fillRect(0, t.y, w, t.h);
+                    prCtx.strokeStyle = 'rgba(255,255,255,0.07)';
+                    prCtx.strokeRect(0, t.y, w, t.h);
+                    prCtx.fillStyle = '#71717A';
+                    prCtx.font = 'bold 10px "JetBrains Mono", monospace';
+                    prCtx.fillText(t.label, 12, t.y + t.h / 2 + 4);
+                });
+
+                // Clips on V1
+                prClips.forEach(c => {
+                    prCtx.fillStyle = c.col;
+                    prCtx.strokeStyle = c.border;
+                    prCtx.lineWidth = 1.5;
+                    prCtx.fillRect(c.x, 84, c.w, 52);
+                    prCtx.strokeRect(c.x, 84, c.w, 52);
+                    prCtx.fillStyle = '#FAFAFA';
+                    prCtx.font = '11px "JetBrains Mono", monospace';
+                    prCtx.fillText(c.name.slice(0, 16), c.x + 8, 114);
+                });
+
+                // Audio waveform on A1
+                prCtx.strokeStyle = 'rgba(34, 211, 238, 0.5)';
+                prCtx.lineWidth = 1.2;
+                prCtx.beginPath();
+                for (let x = 80; x < w - 20; x += 5) {
+                    const y = 176 + Math.sin(x * 0.08 + globalFrame * 0.07) * 14;
+                    if (x === 80) prCtx.moveTo(x, y);
+                    else prCtx.lineTo(x, y);
+                }
+                prCtx.stroke();
+
+                // Golden Beat Markers
+                prTargets.forEach(tx => {
+                    prCtx.strokeStyle = '#FBBF24';
+                    prCtx.setLineDash([4, 4]);
+                    prCtx.beginPath();
+                    prCtx.moveTo(tx, 16);
+                    prCtx.lineTo(tx, h - 16);
+                    prCtx.stroke();
+                    prCtx.setLineDash([]);
+
+                    prCtx.fillStyle = '#FBBF24';
+                    prCtx.fillRect(tx - 22, 28, 44, 16);
+                    prCtx.fillStyle = '#050505';
+                    prCtx.font = 'bold 9px "JetBrains Mono", monospace';
+                    prCtx.fillText('CUT', tx - 10, 39);
+                });
+
+                // Playhead motion
+                prPlayhead += (prRunning ? 4.2 : 2.0) * prDir;
+                if (prPlayhead > w - 35) prDir = -1;
+                if (prPlayhead < 85) prDir = 1;
+
+                prCtx.strokeStyle = '#EF4444';
+                prCtx.lineWidth = 2;
+                prCtx.beginPath();
+                prCtx.moveTo(prPlayhead, 8);
+                prCtx.lineTo(prPlayhead, h - 8);
+                prCtx.stroke();
+            }
+            requestAnimationFrame(renderPremiereGame);
+        }
+        renderPremiereGame();
+
+        /* =========================================================
+           6. GAME 2: DAVINCI RESOLVE — COLOR MATCH CHALLENGE
+           ========================================================= */
+        const dvCanvas = document.getElementById('davinci-game-canvas');
+        const dvCtx = dvCanvas ? dvCanvas.getContext('2d') : null;
+        let dvScore = 0, dvRoundIdx = 0;
+
+        const dvRounds = [
+            { name: 'ROUND 1 OF 4: OOTY MIST TEAL & ORANGE', temp: -18, tint: -8, con: 124, sat: 140, lift: -6 },
+            { name: 'ROUND 2 OF 4: GOLDEN HOUR WEDDING FILM', temp: 32, tint: 12, con: 115, sat: 130, lift: 5 },
+            { name: 'ROUND 3 OF 4: CYBERPUNK MATRIX NEON', temp: -28, tint: -34, con: 135, sat: 155, lift: -12 },
+            { name: 'ROUND 4 OF 4: HIGH-CONTRAST SILVER NOIR', temp: 0, tint: 0, con: 145, sat: 5, lift: -15 }
+        ];
+
+        const sTemp = document.getElementById('dv-slider-temp');
+        const sTint = document.getElementById('dv-slider-tint');
+        const sCon = document.getElementById('dv-slider-con');
+        const sSat = document.getElementById('dv-slider-sat');
+        const sLift = document.getElementById('dv-slider-lift');
+
+        function calculateDvAccuracy() {
+            const target = dvRounds[dvRoundIdx];
+            const dTemp = Math.abs(parseInt(sTemp.value, 10) - target.temp) / 100;
+            const dTint = Math.abs(parseInt(sTint.value, 10) - target.tint) / 100;
+            const dCon = Math.abs(parseInt(sCon.value, 10) - target.con) / 90;
+            const dSat = Math.abs(parseInt(sSat.value, 10) - target.sat) / 180;
+            const dLift = Math.abs(parseInt(sLift.value, 10) - target.lift) / 60;
+
+            const avgErr = (dTemp + dTint + dCon + dSat + dLift) / 5;
+            const acc = Math.max(0, Math.min(100, Math.round((1 - avgErr * 1.45) * 100)));
+
+            document.getElementById('dv-val-temp').textContent = sTemp.value;
+            document.getElementById('dv-val-tint').textContent = sTint.value;
+            document.getElementById('dv-val-con').textContent = sCon.value + '%';
+            document.getElementById('dv-val-sat').textContent = sSat.value + '%';
+            document.getElementById('dv-val-lift').textContent = sLift.value;
+
+            const accEl = document.getElementById('dv-accuracy-readout');
+            accEl.textContent = `${acc}%`;
+            accEl.className = acc >= 92 ? 'text-2xl font-bold text-emerald-400' : 'text-2xl font-bold text-amber-400';
+            return acc;
+        }
+
+        [sTemp, sTint, sCon, sSat, sLift].forEach(el => el?.addEventListener('input', calculateDvAccuracy));
+
+        document.getElementById('dv-hint-btn')?.addEventListener('click', () => {
+            const t = dvRounds[dvRoundIdx];
+            sTemp.value = Math.round((parseInt(sTemp.value, 10) + t.temp) / 2);
+            sTint.value = Math.round((parseInt(sTint.value, 10) + t.tint) / 2);
+            sCon.value = Math.round((parseInt(sCon.value, 10) + t.con) / 2);
+            sSat.value = Math.round((parseInt(sSat.value, 10) + t.sat) / 2);
+            sLift.value = Math.round((parseInt(sLift.value, 10) + t.lift) / 2);
+            calculateDvAccuracy();
+            playTone(1100, 0.06);
+        });
+
+        function loadDvRound(idx) {
+            dvRoundIdx = idx % dvRounds.length;
+            document.getElementById('dv-round-label').textContent = dvRounds[dvRoundIdx].name;
+            sTemp.value = 0; sTint.value = 0; sCon.value = 100; sSat.value = 100; sLift.value = 0;
+            calculateDvAccuracy();
+        }
+
+        document.getElementById('dv-submit-grade')?.addEventListener('click', () => {
+            const acc = calculateDvAccuracy();
+            if (acc >= 90) {
+                const pts = acc * 5;
+                dvScore += pts;
+                document.getElementById('dv-score-readout').textContent = String(dvScore).padStart(4, '0');
+                document.getElementById('dv-feedback-msg').textContent = `🎉 MASTER GRADE LOCKED (${acc}% MATCH)! +${pts} PTS — ADVANCING ROUND!`;
+                playTone(1480, 0.12);
+                setTimeout(() => loadDvRound(dvRoundIdx + 1), 900);
+            } else {
+                playTone(340, 0.08, 'sawtooth');
+                document.getElementById('dv-feedback-msg').textContent = `⚠️ Currently at ${acc}% — reach at least 90% accuracy (or click Auto-Hint) to lock grade!`;
             }
         });
-    });
 
-    /* =========================================
-       SCRUBBING SOFTWARE TIMELINE & APP LOGOS
-       ========================================= */
-    gsap.to("#timeline-container-block", {
-        x: "-120vw",
-        ease: "none",
-        scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 0.2 }
-    });
+        document.getElementById('dv-next-target')?.addEventListener('click', () => {
+            loadDvRound(dvRoundIdx + 1);
+            playTone(880, 0.05);
+        });
 
-    gsap.to(".logo-pr", { y: -180, rotation: 12, scrollTrigger: { trigger: "body", scrub: 1 } });
-    gsap.to(".logo-ps", { y: -300, rotation: -25, scrollTrigger: { trigger: "body", scrub: 1.5 } });
-    gsap.to(".logo-ae", { y: -120, rotation: -8, scrollTrigger: { trigger: "body", scrub: 0.8 } });
-    gsap.to(".logo-dv", { y: -250, rotation: 18, scrollTrigger: { trigger: "body", scrub: 1.2 } });
-    gsap.to(".logo-ai", { y: -200, rotation: 5, scrollTrigger: { trigger: "body", scrub: 1.1 } });
+        function drawGradedHalf(ctx, x, y, w, h, grade) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(x, y, w, h);
+            ctx.clip();
 
-    window.addEventListener('scroll', () => {
-        const tcElement = document.getElementById('live-tc');
-        if(!tcElement) return;
-        
-        const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-        const totalFrames = Math.floor(scrollPercent * 86400); 
-        
-        const hrs = String(Math.floor(totalFrames / 86400)).padStart(2, '0');
-        const mins = String(Math.floor((totalFrames % 86400) / 1440)).padStart(2, '0');
-        const secs = String(Math.floor((totalFrames % 1440) / 24)).padStart(2, '0');
-        const frames = String(totalFrames % 24).padStart(2, '0');
-        
-        tcElement.textContent = `01:${mins}:${secs}:${frames}`;
-    });
+            ctx.filter = `contrast(${grade.con}%) saturate(${grade.sat}%) brightness(${100 + grade.lift}%)`;
 
-    /* =========================================
-       3D MAGNETIC TILT EFFECT (DESKTOP ONLY)
-       ========================================= */
-    const isMobile = window.matchMedia("(max-width: 900px)").matches;
-    
-    if (!isMobile) {
-        const tiltElements = document.querySelectorAll('.tilt-element, .soft-logo');
-        tiltElements.forEach(el => {
-            el.addEventListener('mousemove', (e) => {
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const xPct = (x / rect.width) - 0.5;
-                const yPct = (y / rect.height) - 0.5;
-                el.style.transform = `perspective(1000px) rotateX(${-yPct * 15}deg) rotateY(${xPct * 15}deg) scale3d(1.02, 1.02, 1.02)`;
+            // Sky & Nilgiris mountain scene
+            const sky = ctx.createLinearGradient(x, y, x, y + h);
+            sky.addColorStop(0, '#0F172A');
+            sky.addColorStop(0.6, '#1E293B');
+            sky.addColorStop(1, '#334155');
+            ctx.fillStyle = sky;
+            ctx.fillRect(x, y, w, h);
+
+            // Sun / Moon disc
+            ctx.fillStyle = '#FDE047';
+            ctx.beginPath();
+            ctx.arc(x + w * 0.5, y + h * 0.35, 34, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Mountain ridges
+            for (let m = 0; m < 3; m++) {
+                ctx.fillStyle = `rgba(10, 14, 22, ${0.5 + m * 0.22})`;
+                ctx.beginPath();
+                ctx.moveTo(x, y + h);
+                for (let px = 0; px <= w; px += 25) {
+                    const py = y + h * 0.52 + m * 28 + Math.sin(px * 0.03 + m * 2) * 16;
+                    ctx.lineTo(x + px, py);
+                }
+                ctx.lineTo(x + w, y + h);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            // Temperature & Tint Color Overlay
+            if (grade.temp !== 0) {
+                ctx.fillStyle = grade.temp > 0
+                    ? `rgba(251, 146, 60, ${Math.abs(grade.temp) / 110})`
+                    : `rgba(34, 211, 238, ${Math.abs(grade.temp) / 110})`;
+                ctx.fillRect(x, y, w, h);
+            }
+            if (grade.tint !== 0) {
+                ctx.fillStyle = grade.tint > 0
+                    ? `rgba(232, 121, 249, ${Math.abs(grade.tint) / 120})`
+                    : `rgba(52, 211, 153, ${Math.abs(grade.tint) / 120})`;
+                ctx.fillRect(x, y, w, h);
+            }
+            ctx.restore();
+        }
+
+        function renderDaVinciGame() {
+            if (dvCanvas && dvCtx) {
+                const w = dvCanvas.width, h = dvCanvas.height;
+                dvCtx.clearRect(0, 0, w, h);
+
+                const target = dvRounds[dvRoundIdx];
+                const userGrade = {
+                    temp: parseInt(sTemp.value, 10),
+                    tint: parseInt(sTint.value, 10),
+                    con: parseInt(sCon.value, 10),
+                    sat: parseInt(sSat.value, 10),
+                    lift: parseInt(sLift.value, 10)
+                };
+
+                // Left: Reference Target | Right: Player Live Grade
+                drawGradedHalf(dvCtx, 0, 0, w / 2, h, target);
+                drawGradedHalf(dvCtx, w / 2, 0, w / 2, h, userGrade);
+
+                // Center Split Line
+                dvCtx.strokeStyle = '#FAFAFA';
+                dvCtx.lineWidth = 2;
+                dvCtx.beginPath();
+                dvCtx.moveTo(w / 2, 0);
+                dvCtx.lineTo(w / 2, h);
+                dvCtx.stroke();
+            }
+            requestAnimationFrame(renderDaVinciGame);
+        }
+        calculateDvAccuracy();
+        renderDaVinciGame();
+
+        /* =========================================================
+           7. GAME 3: PHOTOSHOP — LAYER & MASK ALIGNMENT STUDIO
+           ========================================================= */
+        const psCanvas = document.getElementById('photoshop-game-canvas');
+        const psCtx = psCanvas ? psCanvas.getContext('2d') : null;
+        let psScore = 0, selectedLayerIdx = 0, draggingLayerIdx = -1;
+        let dragOffsetX = 0, dragOffsetY = 0;
+
+        const psTargets = [
+            { x: 320, y: 78, w: 260, h: 48, label: 'TITLE TARGET' },
+            { x: 320, y: 195, w: 130, h: 125, label: 'SUBJECT TARGET' },
+            { x: 120, y: 260, w: 120, h: 42, label: 'STAMP TARGET' }
+        ];
+
+        const psLayers = [
+            { x: 190, y: 140, w: 260, h: 48, scale: 1, glow: 50, type: 'title' },
+            { x: 450, y: 210, w: 130, h: 125, scale: 1, glow: 50, type: 'subject' },
+            { x: 240, y: 280, w: 120, h: 42, scale: 1, glow: 50, type: 'stamp' }
+        ];
+
+        function computePsPrecision() {
+            let totalDist = 0;
+            psLayers.forEach((l, i) => {
+                const t = psTargets[i];
+                const d = Math.hypot(l.x - t.x, l.y - t.y);
+                const sErr = Math.abs(l.scale - 1) * 120;
+                totalDist += (d + sErr);
             });
-            el.addEventListener('mouseleave', () => {
-                el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            const prec = Math.max(0, Math.min(100, Math.round(100 - totalDist / 4.2)));
+            const el = document.getElementById('ps-precision-readout');
+            if (el) {
+                el.textContent = `${prec}%`;
+                el.className = prec >= 90 ? 'text-2xl font-bold text-emerald-400' : 'text-2xl font-bold text-sky-400';
+            }
+            return prec;
+        }
+
+        function selectPsLayer(idx) {
+            selectedLayerIdx = idx;
+            document.querySelectorAll('.ps-layer-select').forEach((btn, i) => {
+                btn.className = i === idx
+                    ? 'ps-layer-select w-full text-left px-3 py-2 rounded-lg bg-sky-500/20 border border-sky-400 text-white flex justify-between items-center'
+                    : 'ps-layer-select w-full text-left px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-zinc-300 flex justify-between items-center';
+            });
+            const l = psLayers[idx];
+            document.getElementById('ps-slider-scale').value = Math.round(l.scale * 100);
+            document.getElementById('ps-val-scale').textContent = `${Math.round(l.scale * 100)}%`;
+        }
+
+        document.querySelectorAll('.ps-layer-select').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectPsLayer(parseInt(btn.dataset.layerIdx, 10));
+                playTone(900, 0.04);
             });
         });
-    }
 
-    /* =========================================
-       REVEALS & SKILL BARS
-       ========================================= */
-    const revealElements = document.querySelectorAll('.reveal');
-    const skillBars = document.querySelectorAll('.skill-bar');
+        document.getElementById('ps-slider-scale')?.addEventListener('input', (e) => {
+            const v = parseInt(e.target.value, 10);
+            psLayers[selectedLayerIdx].scale = v / 100;
+            document.getElementById('ps-val-scale').textContent = `${v}%`;
+            computePsPrecision();
+        });
 
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                
-                if(entry.target.id === 'skills-container') {
-                    setTimeout(() => {
-                        skillBars.forEach(bar => {
-                            let percent = bar.getAttribute('data-percent');
-                            let fill = bar.querySelector('.skill-fill');
-                            fill.style.width = percent + '%';
-                            fill.style.transition = 'width 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
-                        });
-                    }, 400);
+        document.getElementById('ps-slider-glow')?.addEventListener('input', (e) => {
+            const v = parseInt(e.target.value, 10);
+            psLayers.forEach(l => l.glow = v);
+            document.getElementById('ps-val-glow').textContent = `${v}%`;
+        });
+
+        // Mouse / Touch Dragging directly on Photoshop Canvas
+        function getCanvasCoords(e) {
+            const rect = psCanvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: ((clientX - rect.left) / rect.width) * psCanvas.width,
+                y: ((clientY - rect.top) / rect.height) * psCanvas.height
+            };
+        }
+
+        psCanvas?.addEventListener('mousedown', (e) => {
+            const pt = getCanvasCoords(e);
+            for (let i = 0; i < psLayers.length; i++) {
+                const l = psLayers[i];
+                if (Math.abs(pt.x - l.x) <= (l.w * l.scale) / 2 && Math.abs(pt.y - l.y) <= (l.h * l.scale) / 2) {
+                    draggingLayerIdx = i;
+                    selectPsLayer(i);
+                    dragOffsetX = pt.x - l.x;
+                    dragOffsetY = pt.y - l.y;
+                    break;
                 }
             }
         });
-    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-    revealElements.forEach(el => revealObserver.observe(el));
+        window.addEventListener('mousemove', (e) => {
+            if (draggingLayerIdx === -1 || !psCanvas) return;
+            const pt = getCanvasCoords(e);
+            const l = psLayers[draggingLayerIdx];
+            const t = psTargets[draggingLayerIdx];
+            l.x = pt.x - dragOffsetX;
+            l.y = pt.y - dragOffsetY;
 
-    /* =========================================
-       SMOOTH NAV SCROLLING & ACTIVE STATE
-       ========================================= */
-    document.querySelectorAll('.nav-links a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetSec = document.getElementById(targetId);
-            
-            window.scrollTo({
-                top: targetSec.offsetTop - 50,
-                behavior: 'smooth'
+            // Magnetic Smart-Guide Snap within 10px
+            if (Math.hypot(l.x - t.x, l.y - t.y) < 12) {
+                l.x = t.x;
+                l.y = t.y;
+            }
+            computePsPrecision();
+        });
+
+        window.addEventListener('mouseup', () => {
+            draggingLayerIdx = -1;
+        });
+
+        document.getElementById('ps-auto-align')?.addEventListener('click', () => {
+            psLayers.forEach((l, i) => {
+                l.x = psTargets[i].x;
+                l.y = psTargets[i].y;
+                l.scale = 1;
+            });
+            selectPsLayer(selectedLayerIdx);
+            computePsPrecision();
+            playTone(1250, 0.07);
+        });
+
+        document.getElementById('ps-scramble-btn')?.addEventListener('click', () => {
+            psLayers.forEach(l => {
+                l.x = 120 + Math.random() * 380;
+                l.y = 70 + Math.random() * 210;
+                l.scale = 0.85 + Math.random() * 0.3;
+            });
+            computePsPrecision();
+            playTone(700, 0.06);
+        });
+
+        document.getElementById('ps-stamp-poster')?.addEventListener('click', () => {
+            const prec = computePsPrecision();
+            if (prec >= 88) {
+                const pts = prec * 5;
+                psScore += pts;
+                document.getElementById('ps-score-readout').textContent = String(psScore).padStart(4, '0');
+                document.getElementById('ps-status-msg').textContent = `🎨 POSTER MASTER STAMPED (${prec}% PRECISION)! +${pts} PTS!`;
+                playTone(1520, 0.1);
+            } else {
+                playTone(360, 0.07, 'sawtooth');
+                document.getElementById('ps-status-msg').textContent = `⚠️ Alignment is ${prec}% — drag layers closer to the cyan target boxes (or click Auto-Snap)!`;
+            }
+        });
+
+        function renderPhotoshopGame() {
+            if (psCanvas && psCtx) {
+                const w = psCanvas.width, h = psCanvas.height;
+                psCtx.clearRect(0, 0, w, h);
+
+                // Subtle Photoshop dark artboard grid
+                psCtx.strokeStyle = 'rgba(255,255,255,0.04)';
+                for (let gx = 0; gx < w; gx += 32) {
+                    psCtx.beginPath(); psCtx.moveTo(gx, 0); psCtx.lineTo(gx, h); psCtx.stroke();
+                }
+                for (let gy = 0; gy < h; gy += 32) {
+                    psCtx.beginPath(); psCtx.moveTo(0, gy); psCtx.lineTo(w, gy); psCtx.stroke();
+                }
+
+                // Draw Target Blueprint Guides
+                psTargets.forEach(t => {
+                    psCtx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+                    psCtx.setLineDash([5, 5]);
+                    psCtx.strokeRect(t.x - t.w / 2, t.y - t.h / 2, t.w, t.h);
+                    psCtx.setLineDash([]);
+                    psCtx.fillStyle = 'rgba(56, 189, 248, 0.55)';
+                    psCtx.font = '9px "JetBrains Mono", monospace';
+                    psCtx.fillText(t.label, t.x - t.w / 2 + 6, t.y - t.h / 2 - 5);
+                });
+
+                // Draw Draggable Layers
+                psLayers.forEach((l, idx) => {
+                    psCtx.save();
+                    psCtx.translate(l.x, l.y);
+                    psCtx.scale(l.scale, l.scale);
+                    psCtx.shadowColor = 'rgba(56, 189, 248, 0.65)';
+                    psCtx.shadowBlur = (l.glow / 100) * 24;
+
+                    if (l.type === 'title') {
+                        psCtx.fillStyle = '#FAFAFA';
+                        psCtx.font = '800 32px "Inter", sans-serif';
+                        psCtx.textAlign = 'center';
+                        psCtx.fillText('THAMIZH', 0, 11);
+                    } else if (l.type === 'subject') {
+                        psCtx.fillStyle = '#18181B';
+                        psCtx.strokeStyle = '#38BDF8';
+                        psCtx.lineWidth = 2;
+                        psCtx.fillRect(-l.w / 2, -l.h / 2, l.w, l.h);
+                        psCtx.strokeRect(-l.w / 2, -l.h / 2, l.w, l.h);
+                        psCtx.fillStyle = '#FAFAFA';
+                        psCtx.beginPath();
+                        psCtx.arc(0, -16, 20, 0, Math.PI * 2);
+                        psCtx.fill();
+                        psCtx.beginPath();
+                        psCtx.moveTo(-36, 48);
+                        psCtx.quadraticCurveTo(0, 6, 36, 48);
+                        psCtx.fill();
+                    } else if (l.type === 'stamp') {
+                        psCtx.fillStyle = '#38BDF8';
+                        psCtx.fillRect(-l.w / 2, -l.h / 2, l.w, l.h);
+                        psCtx.fillStyle = '#050505';
+                        psCtx.font = 'bold 11px "JetBrains Mono", monospace';
+                        psCtx.textAlign = 'center';
+                        psCtx.fillText('★ DIRECTOR CUT', 0, 4);
+                    }
+
+                    // Bounding box handles on active layer
+                    if (idx === selectedLayerIdx) {
+                        psCtx.strokeStyle = '#38BDF8';
+                        psCtx.lineWidth = 1.5;
+                        psCtx.strokeRect(-l.w / 2 - 4, -l.h / 2 - 4, l.w + 8, l.h + 8);
+                    }
+                    psCtx.restore();
+                });
+            }
+            requestAnimationFrame(renderPhotoshopGame);
+        }
+        computePsPrecision();
+        renderPhotoshopGame();
+
+        /* =========================================================
+           8. SOFTWARE SKILLS INTERACTIVE EASING CURVES & MINI GRAPHS
+           ========================================================= */
+        let activeEase = 'cubic-bezier(0.22, 1, 0.36, 1)';
+        let activeCurveType = 'easeOut';
+
+        function triggerSkillBars() {
+            document.querySelectorAll('.skill-card').forEach(card => {
+                const pct = card.dataset.pct;
+                const fill = card.querySelector('.skill-bar-fill');
+                if (fill) {
+                    fill.style.transition = 'none';
+                    fill.style.width = '0%';
+                    void fill.offsetWidth;
+                    fill.style.transition = `width 1.25s ${activeEase}`;
+                    fill.style.width = `${pct}%`;
+                }
+            });
+        }
+
+        document.querySelectorAll('.ease-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.ease-btn').forEach(b => {
+                    b.className = 'ease-btn px-3 py-1 rounded-full text-zinc-400 hover:text-white transition';
+                });
+                btn.className = 'ease-btn px-3 py-1 rounded-full bg-white text-black font-semibold transition';
+                activeEase = btn.dataset.ease;
+                activeCurveType = btn.dataset.curve;
+                triggerSkillBars();
+                playTone(1020, 0.05);
             });
         });
-    });
-    
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.nav-links a');
 
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (scrollY >= sectionTop - 250) {
-                current = section.getAttribute('id');
-            }
+        function renderSkillMiniWaves() {
+            document.querySelectorAll('.skill-card').forEach((card, idx) => {
+                const c = card.querySelector('.skill-wave-canvas');
+                if (!c) return;
+                const ctx = c.getContext('2d');
+                if (!ctx) return;
+                const w = c.width, h = c.height;
+                ctx.clearRect(0, 0, w, h);
+
+                const isHovered = card.matches(':hover');
+                const col = card.dataset.color || '#FAFAFA';
+                ctx.strokeStyle = col;
+                ctx.lineWidth = isHovered ? 2.2 : 1.4;
+                ctx.beginPath();
+
+                for (let x = 8; x <= w - 8; x += 4) {
+                    const t = (x - 8) / (w - 16);
+                    let yNorm = t;
+                    if (activeCurveType === 'easeOut') yNorm = 1 - Math.pow(1 - t, 3);
+                    else if (activeCurveType === 'spring') yNorm = 1 - Math.cos(t * Math.PI * 2.5) * Math.exp(-t * 3.5);
+                    const wave = Math.sin(t * 6 + globalFrame * (isHovered ? 0.12 : 0.03) + idx) * (isHovered ? 5 : 2);
+                    const py = h - 8 - yNorm * (h - 18) + wave;
+                    if (x === 8) ctx.moveTo(x, py);
+                    else ctx.lineTo(x, py);
+                }
+                ctx.stroke();
+            });
+            requestAnimationFrame(renderSkillMiniWaves);
+        }
+        renderSkillMiniWaves();
+
+        /* =========================================================
+           9. SCROLL REVEALS, ACTIVE NAV, COPY EMAIL & BOTTOM SCRUBBER
+           ========================================================= */
+        const slideObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.id === 'skills') setTimeout(triggerSkillBars, 200);
+                }
+            });
+        }, { threshold: 0.14 });
+
+        document.querySelectorAll('.reveal-slide').forEach(sec => slideObserver.observe(sec));
+
+        // Copy Email Button with clean feedback
+        document.getElementById('copy-email-btn')?.addEventListener('click', function() {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = 'tamiln7258@gmail.com';
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            this.textContent = '✓ Copied to Clipboard!';
+            playTone(1320, 0.06);
+            setTimeout(() => { this.textContent = '📋 Copy Email'; }, 2200);
         });
 
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').substring(1) === current) {
-                link.classList.add('active');
-            }
-        });
-    });
-</script>
+        // Scroll Timecode & Bottom Scrub Bar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.top-nav a');
+        const scrubFill = document.getElementById('bottom-scrub-fill');
+        const bottomTc = document.getElementById('bottom-timecode');
 
+        window.addEventListener('scroll', () => {
+            const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+            const pct = Math.max(0, Math.min(1, window.scrollY / maxScroll));
+            if (scrubFill) scrubFill.style.width = `${pct * 100}%`;
+
+            const totalFrames = Math.floor(pct * 86400);
+            const mins = String(Math.floor((totalFrames % 86400) / 1440)).padStart(2, '0');
+            const secs = String(Math.floor((totalFrames % 1440) / 24)).padStart(2, '0');
+            const frames = String(totalFrames % 24).padStart(2, '0');
+            if (bottomTc) bottomTc.textContent = `01:${mins}:${secs}:${frames}`;
+
+            let activeId = 'home';
+            sections.forEach(sec => {
+                if (window.scrollY >= sec.offsetTop - 260) activeId = sec.id;
+            });
+            navLinks.forEach(a => {
+                a.classList.toggle('active', a.getAttribute('href') === `#${activeId}`);
+            });
+        });
+
+        document.getElementById('bottom-scrub-track')?.addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            window.scrollTo({ top: pct * maxScroll, behavior: 'smooth' });
+        });
+
+        // Keyboard shortcuts when Premiere game is visible
+        window.addEventListener('keydown', (e) => {
+            if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+            const prPanel = document.getElementById('game-premiere');
+            if (!prPanel || !prPanel.classList.contains('active')) return;
+            const arcadeRect = document.getElementById('arcade')?.getBoundingClientRect();
+            if (!arcadeRect || arcadeRect.top > window.innerHeight || arcadeRect.bottom < 0) return;
+
+            const k = e.key.toLowerCase();
+            if (e.code === 'Space' || k === 'c') {
+                e.preventDefault();
+                triggerPrRazorCut();
+            } else if (k === 's') splitPrClipAtPlayhead();
+            else if (k === 'x') document.getElementById('pr-btn-copy')?.click();
+            else if (k === 'v') document.getElementById('pr-btn-paste')?.click();
+            else if (e.key === 'Delete' || e.key === 'Backspace') document.getElementById('pr-btn-delete')?.click();
+            else if (k === 'z') document.getElementById('pr-btn-undo')?.click();
+        });
+    </script>
 </body>
 </html>
